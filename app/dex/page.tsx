@@ -121,8 +121,8 @@ function Sprite({
   const svg = (
     <svg
       viewBox={`0 0 ${size} ${size}`}
-      width={72}
-      height={72}
+      width={size * 6}
+      height={size * 6}
       shapeRendering="crispEdges"
       className={silhouette ? "text-muted" : "overflow-visible"}
       data-creature={rig && creature.id}
