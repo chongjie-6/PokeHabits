@@ -1,11 +1,12 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, type CSSProperties } from "react";
 import { CREATURES, discoveries, QUALIFYING_RATE } from "@/lib/creatures";
 import { buildHistory, firstDayOf } from "@/lib/history";
 import { useOpenHabits } from "@/lib/store";
 import { useToday } from "@/lib/use-today";
-import type { Creature } from "@/lib/types";
+import type { Creature, Pixel, PixelBox } from "@/lib/types";
+import "./idle.css";
 
 export default function DexPage() {
   const { hydrated, habits, entries, settings } = useOpenHabits();
@@ -93,30 +94,56 @@ function Sprite({
   silhouette: boolean;
 }) {
   const size = creature.sprite.length;
+  const rig = silhouette ? undefined : creature.rig;
+  const parts = Object.entries(rig?.parts ?? {});
+  const pixels = creature.sprite.flatMap((row, y) =>
+    [...row].flatMap((key, x): Pixel[] => (key === "." ? [] : [[x, y, key]])),
+  );
+  const inside = ([x, y]: Pixel, [bx, by, w, h]: PixelBox) =>
+    x >= bx && x < bx + w && y >= by && y < by + h;
+  const draw = ([x, y, key]: Pixel) => (
+    <rect
+      key={`${x},${y}`}
+      x={x}
+      y={y}
+      width={1}
+      height={1}
+      data-px={key}
+      fill={silhouette ? "currentColor" : creature.colors[key]}
+    />
+  );
+  // Keyframes name colours by key, e.g. a blink is `fill: var(--o)`.
+  const inks = Object.fromEntries(
+    Object.entries(creature.colors).map(([key, hex]) => [`--${key}`, hex]),
+  ) as CSSProperties;
+
   return (
     <svg
       viewBox={`0 0 ${size} ${size}`}
       width={72}
       height={72}
       shapeRendering="crispEdges"
-      className={silhouette ? "text-muted" : undefined}
+      className={silhouette ? "text-muted" : "overflow-visible"}
+      data-creature={rig && creature.id}
+      style={rig && inks}
       role="img"
       aria-label={silhouette ? "Undiscovered creature" : creature.name}
     >
-      {creature.sprite.flatMap((row, y) =>
-        [...row].map((pixel, x) =>
-          pixel === "." ? null : (
-            <rect
-              key={`${x},${y}`}
-              x={x}
-              y={y}
-              width={1}
-              height={1}
-              fill={silhouette ? "currentColor" : creature.colors[pixel]}
-            />
-          ),
-        ),
-      )}
+      <g>
+        {pixels
+          .filter((p) => !parts.some(([, box]) => inside(p, box)))
+          .map(draw)}
+        {Object.entries(rig?.fx ?? {}).map(([name, fx]) => (
+          <g key={name} data-fx={name}>
+            {fx.map(draw)}
+          </g>
+        ))}
+        {parts.map(([name, box]) => (
+          <g key={name} data-part={name}>
+            {pixels.filter((p) => inside(p, box)).map(draw)}
+          </g>
+        ))}
+      </g>
     </svg>
   );
 }

@@ -1,0 +1,537 @@
+/**
+ * Idle loops for discovered creatures — DESIGN.md §5.5.
+ *
+ * Inside the sprite's SVG, 1px is one sprite pixel. Every move is a whole pixel
+ * held with `step-end`, so the art never leaves its grid. Effect pixels are
+ * hidden at rest, which is what lets the reduced-motion rule in globals.css cut
+ * every loop short and still leave each creature in its drawn pose.
+ */
+
+[data-creature] g {
+  transform-box: fill-box;
+}
+
+[data-creature] [data-fx] {
+  opacity: 0;
+}
+
+/* Sproutle: the leaf sways; the morning's drop lands on it and it perks up. */
+[data-creature="sproutle"] [data-part="leaf"] {
+  animation: idle-sproutle-leaf 7.2s step-end infinite;
+}
+[data-creature="sproutle"] [data-fx="drop"] {
+  animation: idle-sproutle-drop 7.2s step-end infinite;
+}
+[data-creature="sproutle"] [data-px="w"] {
+  animation: idle-sproutle-eyes 7.2s step-end infinite;
+}
+@keyframes idle-sproutle-leaf {
+  8%,
+  42% {
+    transform: translateX(1px);
+  }
+  25%,
+  58% {
+    transform: translateX(-1px);
+  }
+  17%,
+  33%,
+  50%,
+  84% {
+    transform: none;
+  }
+  66% {
+    transform: translateY(-1px);
+  }
+}
+@keyframes idle-sproutle-drop {
+  56% {
+    opacity: 1;
+  }
+  61% {
+    transform: translateY(1px);
+  }
+  66% {
+    opacity: 0;
+  }
+}
+@keyframes idle-sproutle-eyes {
+  66% {
+    fill: var(--o);
+  }
+  84% {
+    fill: var(--w);
+  }
+}
+
+/* Emberpup: the ember in its chest flickers; its ears flick, a spark rises. */
+[data-creature="emberpup"] [data-px="l"] {
+  animation: idle-emberpup-ember 1.3s step-end infinite;
+}
+[data-creature="emberpup"] [data-part="earL"] {
+  animation: idle-emberpup-ear-l 5.2s step-end infinite;
+}
+[data-creature="emberpup"] [data-part="earR"] {
+  animation: idle-emberpup-ear-r 5.2s step-end infinite;
+}
+[data-creature="emberpup"] [data-fx="spark"] {
+  animation: idle-emberpup-spark 5.2s step-end infinite;
+}
+@keyframes idle-emberpup-ember {
+  20% {
+    fill: #fff0cc;
+  }
+  35%,
+  80% {
+    fill: var(--l);
+  }
+  55% {
+    fill: #ffb877;
+  }
+  70% {
+    fill: #fff6e0;
+  }
+}
+@keyframes idle-emberpup-ear-l {
+  30% {
+    transform: translateX(1px);
+  }
+  34% {
+    transform: none;
+  }
+}
+@keyframes idle-emberpup-ear-r {
+  38% {
+    transform: translateX(-1px);
+  }
+  42% {
+    transform: none;
+  }
+}
+@keyframes idle-emberpup-spark {
+  60% {
+    opacity: 1;
+  }
+  65% {
+    transform: translateY(-1px);
+  }
+  70% {
+    transform: translate(1px, -2px);
+  }
+  75% {
+    opacity: 0.5;
+    transform: translate(1px, -3px);
+  }
+  80% {
+    opacity: 0;
+  }
+}
+
+/* Drizzlet: its tip wobbles; it sheds one drop, which pools and evaporates. */
+[data-creature="drizzlet"] > g {
+  animation: idle-drizzlet-shed 6.4s step-end infinite;
+}
+[data-creature="drizzlet"] [data-part="tip"] {
+  animation: idle-drizzlet-tip 1.6s step-end infinite;
+}
+[data-creature="drizzlet"] [data-fx="drop"] {
+  animation: idle-drizzlet-drop 6.4s step-end infinite;
+}
+[data-creature="drizzlet"] [data-fx="puddle"] {
+  transform-origin: center;
+  animation: idle-drizzlet-puddle 6.4s step-end infinite;
+}
+@keyframes idle-drizzlet-shed {
+  56% {
+    transform: translateY(-1px);
+  }
+  62% {
+    transform: none;
+  }
+}
+@keyframes idle-drizzlet-tip {
+  25% {
+    transform: translateX(1px);
+  }
+  50% {
+    transform: none;
+  }
+  75% {
+    transform: translateX(-1px);
+  }
+}
+@keyframes idle-drizzlet-drop {
+  50% {
+    opacity: 1;
+  }
+  56% {
+    transform: translateY(2px);
+  }
+  62% {
+    opacity: 0;
+  }
+}
+@keyframes idle-drizzlet-puddle {
+  62% {
+    opacity: 1;
+    transform: scaleX(0.3334);
+  }
+  68% {
+    transform: scaleX(0.6667);
+  }
+  74% {
+    transform: none;
+  }
+  88% {
+    opacity: 0.5;
+  }
+  94% {
+    opacity: 0;
+  }
+}
+
+/* Mossback: holds so still that moss sprouts; moving its head shakes it off. */
+[data-creature="mossback"] [data-fx="neck"] {
+  opacity: 1;
+}
+[data-creature="mossback"] [data-part="head"] {
+  animation: idle-mossback-head 14s step-end infinite;
+}
+[data-creature="mossback"] [data-fx="moss1"] {
+  animation: idle-mossback-moss1 14s step-end infinite;
+}
+[data-creature="mossback"] [data-fx="moss2"] {
+  animation: idle-mossback-moss2 14s step-end infinite;
+}
+[data-creature="mossback"] [data-px="w"] {
+  animation: idle-mossback-blink 14s step-end infinite;
+}
+@keyframes idle-mossback-head {
+  60% {
+    transform: translateX(1px);
+  }
+  82% {
+    transform: none;
+  }
+}
+@keyframes idle-mossback-moss1 {
+  25% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 0;
+  }
+}
+@keyframes idle-mossback-moss2 {
+  42% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 0;
+  }
+}
+@keyframes idle-mossback-blink {
+  70% {
+    fill: var(--o);
+  }
+  76% {
+    fill: var(--w);
+  }
+}
+
+/* Gustling: bobs on the breeze; a gust streams past, pushes it and it flutters. */
+[data-creature="gustling"] > g {
+  animation: idle-gustling-ride 7.6s step-end infinite;
+}
+[data-creature="gustling"] [data-part="wing"] {
+  animation: idle-gustling-wing 7.6s step-end infinite;
+}
+[data-creature="gustling"] [data-fx^="gust"] {
+  animation: idle-gustling-gust 7.6s step-end infinite;
+}
+[data-creature="gustling"] [data-fx="gustB"] {
+  animation-delay: 0.2s;
+}
+@keyframes idle-gustling-ride {
+  12%,
+  37%,
+  87% {
+    transform: translateY(-1px);
+  }
+  25%,
+  50%,
+  72%,
+  94% {
+    transform: none;
+  }
+  58%,
+  66% {
+    transform: translateX(1px);
+  }
+  62% {
+    transform: translate(1px, -1px);
+  }
+}
+@keyframes idle-gustling-wing {
+  58%,
+  62%,
+  66% {
+    transform: translateY(-1px);
+  }
+  60%,
+  64%,
+  68% {
+    transform: none;
+  }
+}
+@keyframes idle-gustling-gust {
+  52% {
+    opacity: 1;
+  }
+  56% {
+    transform: translateX(3px);
+  }
+  60% {
+    transform: translateX(6px);
+  }
+  64% {
+    opacity: 0.5;
+    transform: translateX(9px);
+  }
+  68% {
+    opacity: 0;
+  }
+}
+
+/* Pebblit: does everything twice — two hops, two puffs of dust, two blinks. */
+[data-creature="pebblit"] > g {
+  animation: idle-pebblit-hop 5.6s step-end infinite;
+}
+[data-creature="pebblit"] [data-part^="arm"] {
+  animation: idle-pebblit-arms 5.6s step-end infinite;
+}
+[data-creature="pebblit"] [data-fx="dust"] {
+  animation: idle-pebblit-dust 5.6s step-end infinite;
+}
+[data-creature="pebblit"] [data-px="w"] {
+  animation: idle-pebblit-blink 5.6s step-end infinite;
+}
+@keyframes idle-pebblit-hop {
+  10%,
+  14%,
+  22%,
+  26% {
+    transform: translateY(-1px);
+  }
+  12%,
+  24% {
+    transform: translateY(-2px);
+  }
+  16%,
+  28% {
+    transform: none;
+  }
+}
+@keyframes idle-pebblit-arms {
+  10%,
+  22% {
+    transform: translateY(-1px);
+  }
+  16%,
+  28% {
+    transform: none;
+  }
+}
+@keyframes idle-pebblit-dust {
+  16%,
+  28% {
+    opacity: 1;
+  }
+  19%,
+  31% {
+    opacity: 0;
+  }
+}
+@keyframes idle-pebblit-blink {
+  50%,
+  56% {
+    fill: var(--o);
+  }
+  53%,
+  59% {
+    fill: var(--w);
+  }
+}
+
+/* Glimmoth: flutters in bursts, its wing spots glimmer, the air twinkles. */
+[data-creature="glimmoth"] > g {
+  animation: idle-glimmoth-drift 3.6s step-end infinite;
+}
+[data-creature="glimmoth"] [data-part="wingL"] {
+  transform-origin: right;
+  animation: idle-glimmoth-wing 3.6s step-end infinite;
+}
+[data-creature="glimmoth"] [data-part="wingR"] {
+  transform-origin: left;
+  animation: idle-glimmoth-wing 3.6s step-end infinite;
+}
+[data-creature="glimmoth"] [data-px="w"] {
+  animation: idle-glimmoth-glimmer 2.4s step-end infinite;
+}
+[data-creature="glimmoth"] [data-fx="glint"] {
+  animation: idle-glimmoth-glint 4.2s step-end infinite;
+}
+[data-creature="glimmoth"] [data-fx="rays"] {
+  animation: idle-glimmoth-rays 4.2s step-end infinite;
+}
+@keyframes idle-glimmoth-drift {
+  4% {
+    transform: translateY(-1px);
+  }
+  40% {
+    transform: none;
+  }
+}
+@keyframes idle-glimmoth-wing {
+  4%,
+  12%,
+  20% {
+    transform: scaleX(0.5);
+  }
+  8%,
+  16%,
+  24% {
+    transform: none;
+  }
+}
+@keyframes idle-glimmoth-glimmer {
+  50% {
+    fill: #fff;
+  }
+  62% {
+    fill: var(--w);
+  }
+}
+@keyframes idle-glimmoth-glint {
+  40% {
+    opacity: 1;
+  }
+  52% {
+    opacity: 0;
+  }
+}
+@keyframes idle-glimmoth-rays {
+  44% {
+    opacity: 1;
+  }
+  48% {
+    opacity: 0;
+  }
+}
+
+/* Frostnib: waddles, shivers off the cold swim, then squints: feels great. */
+[data-creature="frostnib"] > g {
+  animation: idle-frostnib-shiver 8s step-end infinite;
+}
+[data-creature="frostnib"] [data-part="body"] {
+  animation: idle-frostnib-waddle 8s step-end infinite;
+}
+[data-creature="frostnib"] [data-part="footL"] {
+  animation: idle-frostnib-foot-l 8s step-end infinite;
+}
+[data-creature="frostnib"] [data-part="footR"] {
+  animation: idle-frostnib-foot-r 8s step-end infinite;
+}
+[data-creature="frostnib"] [data-fx^="spray"] {
+  animation: idle-frostnib-spray 8s step-end infinite;
+}
+[data-creature="frostnib"] [data-fx="spray2"] {
+  animation-delay: 0.16s;
+}
+[data-creature="frostnib"] [data-px="w"] {
+  animation: idle-frostnib-squint 8s step-end infinite;
+}
+@keyframes idle-frostnib-waddle {
+  5%,
+  25%,
+  45% {
+    transform: translateX(-1px);
+  }
+  15%,
+  35%,
+  55% {
+    transform: translateX(1px);
+  }
+  10%,
+  20%,
+  30%,
+  40%,
+  50%,
+  60% {
+    transform: none;
+  }
+}
+@keyframes idle-frostnib-foot-r {
+  5%,
+  25%,
+  45% {
+    transform: translateY(-1px);
+  }
+  10%,
+  30%,
+  50% {
+    transform: none;
+  }
+}
+@keyframes idle-frostnib-foot-l {
+  15%,
+  35%,
+  55% {
+    transform: translateY(-1px);
+  }
+  20%,
+  40%,
+  60% {
+    transform: none;
+  }
+}
+@keyframes idle-frostnib-shiver {
+  64%,
+  66%,
+  68%,
+  70%,
+  72%,
+  74% {
+    transform: translateX(-1px);
+  }
+  65%,
+  67%,
+  69%,
+  71%,
+  73% {
+    transform: translateX(1px);
+  }
+  75%,
+  84% {
+    transform: none;
+  }
+  80% {
+    transform: translateY(-1px);
+  }
+}
+@keyframes idle-frostnib-spray {
+  68% {
+    opacity: 1;
+  }
+  71% {
+    opacity: 0;
+  }
+}
+@keyframes idle-frostnib-squint {
+  78% {
+    fill: var(--o);
+  }
+  92% {
+    fill: var(--w);
+  }
+}

@@ -373,6 +373,8 @@ Every finished week in which at least `QUALIFYING_RATE` (80%) of scheduled habit
 
 **Derived, never persisted**, like streaks: `/dex` rebuilds the history from the first habit and counts. So nothing syncs and every device agrees. The cost is that deleting a habit deletes its entries, which can un-qualify a week and take a creature back. Archiving doesn't do this. If that ever matters, persist a discovery map in `Settings`.
 
+**A discovered creature idles; a silhouette does not** — coming alive is part of finding it. Each loop acts out its own blurb, so no two share a move: Sproutle's leaf is watered, Pebblit does everything twice, Mossback grows moss by keeping still and loses it when it moves. A creature's `rig` lifts boxes of its sprite out as parts and adds effect pixels; `app/dex/idle.css` animates them in whole sprite pixels held with `step-end`, so the art never leaves its grid. Effect pixels are hidden at rest, which is why the global reduced-motion rule, cutting every loop short, leaves each creature in its drawn pose.
+
 **Every sprite is original.** They are pixel maps drawn in the corpus file, not image files. Art from elsewhere ships only under a licence that allows it, and never a character someone else owns: no Pokémon, no Poké- names, no ball iconography.
 
 ---

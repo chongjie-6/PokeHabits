@@ -76,3 +76,29 @@ describe("CREATURES", () => {
     }
   });
 });
+
+describe("creature rigs", () => {
+  it("lift disjoint, non-empty boxes and paint effects in known colours", () => {
+    for (const { id, sprite, colors, rig } of CREATURES) {
+      const claimed = new Set<string>();
+      for (const [name, [x, y, w, h]] of Object.entries(rig?.parts ?? {})) {
+        let drawn = 0;
+        for (let row = y; row < y + h; row++) {
+          for (let col = x; col < x + w; col++) {
+            const pixel = sprite[row]?.[col];
+            expect(pixel, `${id}.${name} leaves the grid`).toBeDefined();
+            expect(claimed.has(`${col},${row}`), `${id}.${name}`).toBe(false);
+            claimed.add(`${col},${row}`);
+            if (pixel !== ".") drawn++;
+          }
+        }
+        expect(drawn, `${id}.${name} is empty`).toBeGreaterThan(0);
+      }
+      for (const [name, pixels] of Object.entries(rig?.fx ?? {})) {
+        for (const [, , key] of pixels) {
+          expect(colors[key], `${id}.${name}`).toBeDefined();
+        }
+      }
+    }
+  });
+});

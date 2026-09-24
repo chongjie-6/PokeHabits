@@ -6,7 +6,7 @@
  * Order is discovery order: the Nth good week finds the Nth creature.
  */
 
-import type { Creature } from "@/lib/types";
+import type { Creature, Pixel } from "@/lib/types";
 
 const OUTLINE = "#2a2433";
 const SHINE = "#ffffff";
@@ -16,7 +16,7 @@ export const CREATURES: Creature[] = [
     id: "sproutle",
     name: "Sproutle",
     blurb: "Grows one leaf for every morning it is watered. Never skips one.",
-    colors: { o: OUTLINE, w: SHINE, b: "#7cc26b", l: "#3f9b4a" },
+    colors: { o: OUTLINE, w: SHINE, b: "#7cc26b", l: "#3f9b4a", d: "#5aa9e6" },
     sprite: [
       "......ll....",
       ".....lll....",
@@ -31,6 +31,10 @@ export const CREATURES: Creature[] = [
       "...oo..oo...",
       "............",
     ],
+    rig: {
+      parts: { leaf: [5, 0, 3, 2] },
+      fx: { drop: [[6, -2, "d"]] },
+    },
   },
   {
     id: "emberpup",
@@ -51,6 +55,10 @@ export const CREATURES: Creature[] = [
       "..oo....oo..",
       "............",
     ],
+    rig: {
+      parts: { earL: [1, 0, 1, 1], earR: [10, 0, 1, 1] },
+      fx: { spark: [[5, 2, "b"]] },
+    },
   },
   {
     id: "drizzlet",
@@ -71,6 +79,13 @@ export const CREATURES: Creature[] = [
       "...oooooo...",
       "............",
     ],
+    rig: {
+      parts: { tip: [4, 0, 4, 3] },
+      fx: {
+        drop: [[6, 11, "b"]],
+        puddle: [3, 4, 5, 6, 7, 8].map((x): Pixel => [x, 12, "b"]),
+      },
+    },
   },
   {
     id: "mossback",
@@ -92,12 +107,27 @@ export const CREATURES: Creature[] = [
       "............",
       "............",
     ],
+    rig: {
+      parts: { head: [9, 4, 3, 3] },
+      fx: {
+        neck: [
+          [9, 4, "o"],
+          [9, 5, "b"],
+          [9, 6, "b"],
+        ],
+        moss1: [[6, 2, "l"]],
+        moss2: [
+          [5, 2, "l"],
+          [6, 1, "l"],
+        ],
+      },
+    },
   },
   {
     id: "gustling",
     name: "Gustling",
     blurb: "Rides the first breeze of the day and is home before dark.",
-    colors: { o: OUTLINE, w: SHINE, b: "#e8eef2", l: "#f2c14e" },
+    colors: { o: OUTLINE, w: SHINE, b: "#e8eef2", l: "#f2c14e", g: "#a7c4d8" },
     sprite: [
       "............",
       "....oooo....",
@@ -112,6 +142,20 @@ export const CREATURES: Creature[] = [
       "....o..o....",
       "............",
     ],
+    rig: {
+      parts: { wing: [0, 5, 5, 3] },
+      fx: {
+        gustA: [
+          [0, 0, "g"],
+          [1, 0, "g"],
+          [2, 0, "g"],
+        ],
+        gustB: [
+          [0, 11, "g"],
+          [1, 11, "g"],
+        ],
+      },
+    },
   },
   {
     id: "pebblit",
@@ -132,6 +176,15 @@ export const CREATURES: Creature[] = [
       "...oo..oo...",
       "............",
     ],
+    rig: {
+      parts: { armL: [0, 6, 2, 3], armR: [10, 6, 2, 3] },
+      fx: {
+        dust: [
+          [2, 10, "b"],
+          [9, 10, "b"],
+        ],
+      },
+    },
   },
   {
     id: "glimmoth",
@@ -153,12 +206,24 @@ export const CREATURES: Creature[] = [
       "............",
       "............",
     ],
+    rig: {
+      parts: { wingL: [0, 1, 4, 8], wingR: [8, 1, 4, 8] },
+      fx: {
+        glint: [[10, 10, "w"]],
+        rays: [
+          [9, 10, "w"],
+          [11, 10, "w"],
+          [10, 9, "w"],
+          [10, 11, "w"],
+        ],
+      },
+    },
   },
   {
     id: "frostnib",
     name: "Frostnib",
     blurb: "Takes a cold swim every day, and says it feels great afterwards.",
-    colors: { o: OUTLINE, w: SHINE, b: "#3d5a80", l: "#eef4fa" },
+    colors: { o: OUTLINE, w: SHINE, b: "#3d5a80", l: "#eef4fa", d: "#7fc8f8" },
     sprite: [
       "....oooo....",
       "...obbbbo...",
@@ -173,5 +238,22 @@ export const CREATURES: Creature[] = [
       "..oooooooo..",
       "...ll..ll...",
     ],
+    rig: {
+      parts: {
+        body: [0, 0, 12, 11],
+        footL: [3, 11, 2, 1],
+        footR: [7, 11, 2, 1],
+      },
+      fx: {
+        spray1: [
+          [0, 4, "d"],
+          [11, 4, "d"],
+        ],
+        spray2: [
+          [-1, 2, "d"],
+          [12, 2, "d"],
+        ],
+      },
+    },
   },
 ];

@@ -152,7 +152,18 @@ export type Creature = {
   blurb: string;
   colors: Record<string, string>;
   sprite: string[];
+  /**
+   * Idle animation (§5.5): `parts` lift boxes out of the sprite to move on their
+   * own, `fx` adds pixels shown only mid-loop. `app/dex/idle.css` animates both by name.
+   */
+  rig?: { parts?: Record<string, PixelBox>; fx?: Record<string, Pixel[]> };
 };
+
+/** `[x, y, width, height]` in sprite pixels. */
+export type PixelBox = [x: number, y: number, w: number, h: number];
+
+/** `[x, y, colour key]`; may sit just outside the sprite's grid. */
+export type Pixel = [x: number, y: number, key: string];
 
 /** Which corpus the daily card draws from. See DESIGN.md §5.3. */
 export type DailyMode = "quotes" | "facts";
