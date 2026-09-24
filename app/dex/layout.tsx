@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   openGraph: {
     type: "website",
-    siteName: "OpenHabits",
+    siteName: "PokeHabits",
     title: "Creatures · OpenHabits",
     description: DESCRIPTION,
   },
