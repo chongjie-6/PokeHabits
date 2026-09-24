@@ -1,0 +1,92 @@
+# Self-hosted OpenHabits: the app, its own Postgres, and a one-shot migration.
+#
+#   echo "BETTER_AUTH_SECRET=$(openssl rand -base64 32)" > .env
+#   docker compose up -d                          # http://localhost:3000
+#
+# Behind a domain, add BETTER_AUTH_URL=https://habits.example to .env and put a
+# TLS-terminating proxy in front. Mail, reminders and rate limiting stay off
+# until their variables are set — docs/DEPLOYMENT.md covers each one.
+
+x-database-url: &database-url postgres://openhabits:${OPENHABITS_DB_PASSWORD:-openhabits}@db:5432/openhabits
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      OPENHABITS_DB_PASSWORD: ${OPENHABITS_DB_PASSWORD:-openhabits}
+    volumes:
+      - db:/var/lib/postgresql/data
+      # Creates the ordinary role the app connects as. Not the superuser the
+      # image starts with: that role bypasses row-level security (DESIGN.md §13.15).
+      - ./docker/postgres-init.sh:/docker-entrypoint-initdb.d/openhabits.sh:ro
+    healthcheck:
+      # Over TCP, because the image runs its init scripts against a server that
+      # only listens on the socket — a socket check passes before the role exists.
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U openhabits -d openhabits"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  migrate:
+    build:
+      context: .
+      target: migrate
+    environment:
+      DATABASE_URL: *database-url
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  app:
+    build:
+      context: .
+      target: runtime
+      args:
+        SITE_URL: ${SITE_URL:-${BETTER_AUTH_URL:-http://localhost:3000}}
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      DATABASE_URL: *database-url
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:?Set BETTER_AUTH_SECRET in .env - see the top of docker-compose.yml}
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL:-http://localhost:3000}
+      SITE_URL: ${SITE_URL:-}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      MAIL_FROM: ${MAIL_FROM:-}
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+      VAPID_SUBJECT: ${VAPID_SUBJECT:-}
+      CRON_SECRET: ${CRON_SECRET:-}
+      UPSTASH_REDIS_REST_URL: ${UPSTASH_REDIS_REST_URL:-}
+      UPSTASH_REDIS_REST_TOKEN: ${UPSTASH_REDIS_REST_TOKEN:-}
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  # Opt in with `docker compose --profile reminders up -d`, once CRON_SECRET and
+  # the VAPID pair are set. The sweep is hourly because "9am" is a wall clock in
+  # each user's own timezone (DESIGN.md §8.5).
+  reminders:
+    image: curlimages/curl:8.11.1
+    profiles: [reminders]
+    restart: unless-stopped
+    environment:
+      CRON_SECRET: ${CRON_SECRET:-}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        [ -n "$$CRON_SECRET" ] || { echo "CRON_SECRET is unset; the sweep would be refused."; exit 1; }
+        while true; do
+          sleep $$((3660 - $$(date +%s) % 3600))
+          curl -fsS -H "Authorization: Bearer $$CRON_SECRET" http://app:3000/api/cron/reminders || true
+          echo
+        done
+    depends_on:
+      - app
+
+volumes:
+  db:

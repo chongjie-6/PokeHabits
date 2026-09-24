@@ -1,0 +1,109 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  # Superseding a pull request's run is free; superseding main's is not, because
+  # the run holds a migration and a deploy and a cancel can land between them.
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      - run: npm run typecheck
+
+      - run: npm test
+
+      # No environment is supplied on purpose: every variable in .env.example is
+      # optional, and a build that needs one has broken that promise (§13.11).
+      - run: npm run build
+
+  # Applied between the build and the deploy, never after it: the new build
+  # assumes the new schema. A database briefly ahead of the code is the harmless
+  # direction to be wrong in; the reverse is what 500s on a missing table.
+  migrate:
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Apply migrations
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          # A deployment with no database is supported everywhere else in this
+          # app (.env.example), and it has nothing to migrate — so this is a
+          # quiet no-op rather than a red main. A deployment that does have one
+          # needs the secret here as well as in Vercel: without it the schema
+          # silently stops tracking the code, which is a 500 on the first query
+          # against a table the migrations were going to create.
+          if [ -z "$DATABASE_URL" ]; then
+            echo "DATABASE_URL secret is unset; no database to migrate."
+            exit 0
+          fi
+          # Never `push`, here least of all — see drizzle.config.ts.
+          npm run db:migrate
+
+  # Production is deployed from here, not from Vercel's Git integration, which
+  # subscribes to the same push webhook and would ship a red build. vercel.json
+  # turns that trigger off for main; the `needs` above is what replaces it.
+  deploy:
+    needs: [verify, migrate]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.url }}
+
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - run: npm install --global vercel@latest
+
+      # Unlike the verify build, this one gets the project's Production
+      # environment, so it is the artifact that actually serves traffic.
+      - run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      # Assigned first, echoed second. Inlining the substitution into `echo`
+      # hands the step `echo`'s exit code, so a rejected deploy reported green.
+      - id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          echo "url=$url" >> "$GITHUB_OUTPUT"

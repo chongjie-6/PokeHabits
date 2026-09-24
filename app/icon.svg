@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="OpenHabits">
+  <rect width="512" height="512" rx="112.64" fill="#1a4d2c"/>
+  <rect x="112.64" y="112.64" width="80.282" height="80.282" rx="14.451" fill="#40c463"/>
+  <rect x="215.859" y="112.64" width="80.282" height="80.282" rx="14.451" fill="#9be9a8"/>
+  <rect x="319.078" y="112.64" width="80.282" height="80.282" rx="14.451" fill="#2a8248"/>
+  <rect x="112.64" y="215.859" width="80.282" height="80.282" rx="14.451" fill="#9be9a8"/>
+  <rect x="215.859" y="215.859" width="80.282" height="80.282" rx="14.451" fill="#ffffff"/>
+  <rect x="319.078" y="215.859" width="80.282" height="80.282" rx="14.451" fill="#40c463"/>
+  <rect x="112.64" y="319.078" width="80.282" height="80.282" rx="14.451" fill="#2a8248"/>
+  <rect x="215.859" y="319.078" width="80.282" height="80.282" rx="14.451" fill="#40c463"/>
+  <rect x="319.078" y="319.078" width="80.282" height="80.282" rx="14.451" fill="#9be9a8"/>
+</svg>

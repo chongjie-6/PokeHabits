@@ -1,0 +1,53 @@
+name: Feature request
+description: Suggest something OpenHabits should do
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        `ROADMAP.md` holds what is already planned, in order, and marks which
+        open questions are settled decisions rather than pending work. Worth a
+        look first — the answer may already be there.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What are you trying to do that the app makes hard? Describe the situation, not the feature.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you'd like instead
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What you tried, or considered
+      description: Including workarounds that nearly work.
+
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: How it fits
+      description: OpenHabits is local-first and works with no account, no network and no environment set. Which of these does your idea need?
+      options:
+        - label: It works entirely offline, on one device
+        - label: It needs an account or a server
+        - label: It changes something that syncs between devices
+        - label: It's appearance only (which is device-local, by design)
+        - label: I'm not sure
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I checked `ROADMAP.md` and `DESIGN.md` §12 / §13.8
+          required: true
+        - label: I searched existing issues
+          required: true

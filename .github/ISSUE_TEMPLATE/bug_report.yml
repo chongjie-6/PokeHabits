@@ -1,0 +1,111 @@
+name: Bug report
+description: Something behaves differently from how it is documented
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before filing: a fair number of surprises here are deliberate — a rest day
+        is drawn differently from a failed one, a null completion rate is an empty
+        track rather than a zero-width bar, and appearance never syncs between
+        devices. `DESIGN.md` §12 and §13.8 record the ones most often mistaken for
+        bugs.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: And what you expected instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Add a habit with a weekly cadence
+        2. Go to /week and tick last Thursday
+        3. …
+    validations:
+      required: true
+
+  - type: dropdown
+    id: screen
+    attributes:
+      label: Where
+      multiple: true
+      options:
+        - Today (/)
+        - Week (/week)
+        - Stats (/stats)
+        - Settings (/settings)
+        - Habit detail (/habit)
+        - Collection (/quotes)
+        - Sync / accounts
+        - Reminders
+        - Install / offline
+        - Somewhere else
+    validations:
+      required: true
+
+  - type: input
+    id: env
+    attributes:
+      label: Browser and OS
+      placeholder: Safari 18 on iOS 18, installed to the home screen
+    validations:
+      required: true
+
+  - type: dropdown
+    id: appearance
+    attributes:
+      label: Skin and theme
+      options:
+        - classic / light
+        - classic / dark
+        - grid / light
+        - grid / dark
+        - blocks / light
+        - blocks / dark
+        - With a custom palette
+        - Not relevant
+    validations:
+      required: true
+
+  - type: dropdown
+    id: sync
+    attributes:
+      label: Is sync switched on?
+      description: Signed in on this device, against a deployment with DATABASE_URL set.
+      options:
+        - "No — local only (the default)"
+        - "Yes — signed in"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Commit or deployment
+      placeholder: 0b7b877, or the URL you were using
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Console output
+      description: Anything in the browser console or the network tab. Redact tokens and email addresses.
+      render: shell
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I checked `DESIGN.md` §12 / §13.8 and `ROADMAP.md`, and this isn't a decision recorded there
+          required: true
+        - label: I searched existing issues
+          required: true
+        - label: This is not a security vulnerability (those go through Security → Advisories)
+          required: true

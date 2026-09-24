@@ -1,0 +1,23 @@
+{
+  "name": "openhabits-reminders",
+  "main": "reminders.ts",
+  "compatibility_date": "2026-09-01",
+
+  "triggers": {
+    "crons": ["0 * * * *"],
+  },
+
+  "vars": {
+    "SITE_URL": "https://openhabits.app/",
+  },
+
+  // There is no fetch handler and nothing here should answer HTTP: the Worker's
+  // only entry point is the schedule above.
+  "workers_dev": false,
+
+  // The failure this feature cannot afford is a silent one, and these logs are
+  // the only place a failed sweep is visible.
+  "observability": {
+    "enabled": true,
+  },
+}

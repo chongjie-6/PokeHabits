@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Design decisions and open questions
+    url: https://github.com/chongjie-6/OpenHabits/blob/main/DESIGN.md
+    about: Much of what looks surprising was decided deliberately. Check DESIGN.md §12 and §13.8, and ROADMAP.md, before filing.
+  - name: Report a security vulnerability
+    url: https://github.com/chongjie-6/OpenHabits/security/advisories/new
+    about: Please report vulnerabilities privately, never as a public issue.

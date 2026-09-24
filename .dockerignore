@@ -1,0 +1,19 @@
+# `next build` loads .env files, so one in the context would be baked into the
+# image and published with it.
+.env*
+
+.git
+.github
+.next
+.vercel
+.wrangler
+.claude
+node_modules
+coverage
+dist
+dist-ssr
+docs
+tests
+*.tsbuildinfo
+Dockerfile
+docker-compose.yml

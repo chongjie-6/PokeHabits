@@ -1,0 +1,732 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens — DESIGN.md §6
+
+   TWO INDEPENDENT AXES.
+
+   `data-theme` is light/dark. `data-skin` is which design — `classic` (this
+   file's base definition), `grid` or `blocks`. They compose: every skin has a
+   light definition and a dark one. Both attributes are set before paint by
+   `lib/theme.ts:THEME_SCRIPT`, and both are absent for the default, so a
+   default install's document element is identical to the static build's.
+
+   Light is the base definition. Dark is redefined twice, once for the system
+   preference and once for the explicit toggle, so that a user who picks "light"
+   on a dark-mode OS still gets light. No colour has its only definition inside
+   a media query.
+
+   A SKIN RESTATES EVERY COLOUR IT OVERRIDES, IN ALL THREE OF ITS BLOCKS.
+   `:root[data-skin="grid"]` and `:root[data-theme="dark"]` have the same
+   specificity, and the skin block is the later of the two, so a colour a skin
+   sets only in its light block would leak into dark mode and win. The dark
+   blocks below therefore repeat the whole list rather than the difference. Each
+   block is self-contained on purpose: it survives being reordered.
+
+   Tokens that do not vary with theme — radii, border width, font stacks — are
+   safe in a skin's light block alone. No theme block touches them.
+
+   --muted is the lightest text colour that passes WCAG AA (4.5:1) for normal
+   text, and in `classic` it does so with no headroom: 4.55:1 at its worst
+   pairing, on --surface-2 in light mode. Never apply an opacity modifier to it.
+   Every `text-muted/80` and `text-muted/70` in the codebase failed AA in both
+   themes (2.64–4.35:1) and was removed in the §11 phase-7 audit. If something
+   needs to recede further than --muted, it needs a smaller role on the page,
+   not a thinner colour. The `grid` and `blocks` mutes were picked to the same
+   bar and clear it with more room (5.3:1 and 5.4:1 at their worst pairing), but
+   the rule is the rule in every skin.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --background: #fbfbf9;
+  --surface: #ffffff;
+  --surface-2: #f3f3f0;
+  --foreground: #1a1a19;
+  --muted: #6f6f68;
+  --border: #e5e5df;
+  --accent: #216e39;
+  --accent-fg: #ffffff;
+  --ring: #30a14e;
+  --danger: #c0392b;
+
+  /* A second accent for skins that need a highlight the primary cannot carry —
+     `blocks` paints on near-black, where the primary is the black itself.
+     Classic has no such need and points it at the ring. */
+  --accent-2: #30a14e;
+  --accent-2-fg: var(--accent-fg);
+
+  /* The quote's own surface. Classic and grid let it sit on the page; only
+     `blocks` inverts it, and it needs its own trio because the inversion has
+     to stay legible in a theme where the page is already near-black. */
+  --quote-bg: var(--surface);
+  --quote-fg: var(--foreground);
+  --quote-meta: var(--muted);
+
+  /* Contribution ramp */
+  --hm-0: #ebedf0;
+  --hm-1: #9be9a8;
+  --hm-2: #40c463;
+  --hm-3: #30a14e;
+  --hm-4: #216e39;
+
+  /* Habit accents. Deliberately NOT skinned: a habit's colour is its identity
+     across the app, and these six are the contrast-validated set. A skin
+     changes the room, not which habit is the blue one. */
+  --habit-green: #2f9e44;
+  --habit-blue: #1971c2;
+  --habit-violet: #6741d9;
+  --habit-amber: #e8590c;
+  --habit-rose: #d6336c;
+  --habit-teal: #0c8599;
+
+  /* The oklch lightness band the palette above occupies. A user-picked hex is
+     clamped into it (lib/colors.ts) so any colour stays legible on this
+     theme's background; 0.64 is where a mid-chroma accent still clears 3:1.
+     Skins keep the band: all three have a near-white light background and a
+     near-black dark one, so the same clamp holds. */
+  --habit-l-min: 0.4;
+  --habit-l-max: 0.64;
+
+  /* Shape. Named apart from the Tailwind tokens below so a skin can override
+     them without redefining a utility. */
+  --card-radius: 16px;
+  --control-radius: 8px;
+  --cell-radius: 2px;
+  --border-w: 1px;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.05);
+
+  /* Type. `--font-geist-*` come from next/font in the root layout. */
+  --font-ui: var(--font-geist-sans), system-ui, sans-serif;
+  --font-display: var(--font-geist-sans), system-ui, sans-serif;
+  --font-numeric: var(--font-geist-mono), ui-monospace, monospace;
+  --font-quote: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+
+  --display-weight: 600;
+  --display-tracking: -0.01em;
+  --display-transform: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: #0d1117;
+    --surface: #161b22;
+    --surface-2: #1c2128;
+    --foreground: #e6edf3;
+    --muted: #8b949e;
+    --border: #2a313a;
+    --accent: #2ea043;
+    --accent-fg: #04140a;
+    --ring: #39d353;
+    --danger: #f85149;
+    --accent-2: #39d353;
+    --accent-2-fg: var(--accent-fg);
+    --quote-bg: var(--surface);
+    --quote-fg: var(--foreground);
+    --quote-meta: var(--muted);
+
+    --hm-0: #161b22;
+    --hm-1: #0e4429;
+    --hm-2: #006d32;
+    --hm-3: #26a641;
+    --hm-4: #39d353;
+
+    --habit-green: #4ade80;
+    --habit-blue: #60a5fa;
+    --habit-violet: #a78bfa;
+    --habit-amber: #fbbf24;
+    --habit-rose: #fb7185;
+    --habit-teal: #2dd4bf;
+
+    --habit-l-min: 0.7;
+    --habit-l-max: 0.88;
+
+    /* A drop shadow on a near-black page is invisible; a hairline is not. */
+    --shadow-card: 0 0 0 1px rgb(255 255 255 / 0.02);
+  }
+}
+
+:root[data-theme="dark"] {
+  --background: #0d1117;
+  --surface: #161b22;
+  --surface-2: #1c2128;
+  --foreground: #e6edf3;
+  --muted: #8b949e;
+  --border: #2a313a;
+  --accent: #2ea043;
+  --accent-fg: #04140a;
+  --ring: #39d353;
+  --danger: #f85149;
+  --accent-2: #39d353;
+  --accent-2-fg: var(--accent-fg);
+  --quote-bg: var(--surface);
+  --quote-fg: var(--foreground);
+  --quote-meta: var(--muted);
+
+  --hm-0: #161b22;
+  --hm-1: #0e4429;
+  --hm-2: #006d32;
+  --hm-3: #26a641;
+  --hm-4: #39d353;
+
+  --habit-green: #4ade80;
+  --habit-blue: #60a5fa;
+  --habit-violet: #a78bfa;
+  --habit-amber: #fbbf24;
+  --habit-rose: #fb7185;
+  --habit-teal: #2dd4bf;
+
+  --habit-l-min: 0.7;
+  --habit-l-max: 0.88;
+
+  --shadow-card: 0 0 0 1px rgb(255 255 255 / 0.02);
+}
+
+/* ---------------------------------------------------------------------------
+   Skin: grid — DESIGN.md §6.5
+
+   Data-first. Cooler and flatter than classic, tighter radii, no shadow, and
+   IBM Plex throughout so numerals line up in a column. The heatmap ramp is
+   deliberately NOT overridden: promoting the contribution grid is the whole
+   point of this skin, and it should be the grid everyone already recognises.
+   --------------------------------------------------------------------------- */
+
+:root[data-skin="grid"] {
+  --background: #ffffff;
+  --surface: #fcfcfd;
+  --surface-2: #f6f7f8;
+  --foreground: #16181d;
+  --muted: #63676f;
+  --border: #e6e8eb;
+  --accent: #216e39;
+  --accent-fg: #ffffff;
+  --ring: #30a14e;
+  --danger: #c0392b;
+  --accent-2: #30a14e;
+  --accent-2-fg: var(--accent-fg);
+  --quote-bg: transparent;
+  --quote-fg: var(--foreground);
+  --quote-meta: var(--muted);
+
+  --card-radius: 6px;
+  --control-radius: 4px;
+  --cell-radius: 2px;
+  --border-w: 1px;
+  --shadow-card: none;
+
+  --font-ui: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-numeric: var(--font-plex-mono), ui-monospace, monospace;
+  /* No serif: a book face beside a dense table reads as a different app. */
+  --font-quote: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --display-weight: 600;
+  --display-tracking: -0.02em;
+  --display-transform: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"])[data-skin="grid"] {
+    --background: #0c0f14;
+    --surface: #11151b;
+    --surface-2: #161b23;
+    --foreground: #e3e7ec;
+    --muted: #99a1ad;
+    --border: #222933;
+    --accent: #2ea043;
+    --accent-fg: #04140a;
+    --ring: #39d353;
+    --danger: #f85149;
+    --accent-2: #39d353;
+    --accent-2-fg: var(--accent-fg);
+    --quote-bg: transparent;
+    --quote-fg: var(--foreground);
+    --quote-meta: var(--muted);
+
+    --shadow-card: none;
+  }
+}
+
+:root[data-theme="dark"][data-skin="grid"] {
+  --background: #0c0f14;
+  --surface: #11151b;
+  --surface-2: #161b23;
+  --foreground: #e3e7ec;
+  --muted: #99a1ad;
+  --border: #222933;
+  --accent: #2ea043;
+  --accent-fg: #04140a;
+  --ring: #39d353;
+  --danger: #f85149;
+  --accent-2: #39d353;
+  --accent-2-fg: var(--accent-fg);
+  --quote-bg: transparent;
+  --quote-fg: var(--foreground);
+  --quote-meta: var(--muted);
+
+  --shadow-card: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Skin: blocks — DESIGN.md §6.5
+
+   Hard-edged and loud. Bone paper, black rules, a hard offset shadow instead of
+   a soft one, and an acid highlight that only ever appears on black. `--border`
+   IS the foreground here — the borders are the design — which is why the
+   border width doubles and every radius goes to zero.
+
+   The ramp is re-hued to the acid/olive family but keeps classic's lightness
+   progression step for step, so whatever legibility holds for the green ramp
+   holds for this one.
+   --------------------------------------------------------------------------- */
+
+:root[data-skin="blocks"] {
+  --background: #efece1;
+  --surface: #f6f3ea;
+  --surface-2: #e3dfd0;
+  --foreground: #111111;
+  --muted: #57544a;
+  --border: #111111;
+  --accent: #111111;
+  --accent-fg: #c6f24e;
+  --ring: #ff5a1f;
+  --danger: #b02a1c;
+  --accent-2: #c6f24e;
+  --accent-2-fg: #111111;
+  --quote-bg: #111111;
+  --quote-fg: #efece1;
+  --quote-meta: #c6f24e;
+
+  --hm-0: #e3dfcf;
+  --hm-1: #e2f2a3;
+  --hm-2: #c2e04a;
+  --hm-3: #94ad25;
+  --hm-4: #5d6f16;
+
+  --card-radius: 0px;
+  --control-radius: 0px;
+  --cell-radius: 0px;
+  --border-w: 2px;
+  --shadow-card: 4px 4px 0 var(--border);
+
+  --font-ui: var(--font-space-grotesk), "Helvetica Neue", Helvetica, sans-serif;
+  --font-display:
+    var(--font-archivo-black), "Arial Black", Helvetica, sans-serif;
+  --font-numeric: var(--font-space-grotesk), ui-monospace, monospace;
+  --font-quote:
+    var(--font-space-grotesk), "Helvetica Neue", Helvetica, sans-serif;
+
+  /* Archivo Black has one weight; asking for 600 would synthesise a bolder one
+     on top of an already-black face. */
+  --display-weight: 400;
+  --display-tracking: -0.02em;
+  --display-transform: uppercase;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"])[data-skin="blocks"] {
+    --background: #0e0e0c;
+    --surface: #17170f;
+    --surface-2: #1f1f16;
+    --foreground: #f2efe1;
+    --muted: #a09a86;
+    --border: #f2efe1;
+    --accent: #c6f24e;
+    --accent-fg: #111111;
+    --ring: #ff7a45;
+    --danger: #f85149;
+    --accent-2: #c6f24e;
+    --accent-2-fg: #111111;
+    --quote-bg: #c6f24e;
+    --quote-fg: #111111;
+    --quote-meta: #41500f;
+
+    --hm-0: #1f1f16;
+    --hm-1: #3d4a12;
+    --hm-2: #6b8a1a;
+    --hm-3: #9ecb2b;
+    --hm-4: #c6f24e;
+
+    --shadow-card: 4px 4px 0 var(--border);
+  }
+}
+
+:root[data-theme="dark"][data-skin="blocks"] {
+  --background: #0e0e0c;
+  --surface: #17170f;
+  --surface-2: #1f1f16;
+  --foreground: #f2efe1;
+  --muted: #a09a86;
+  --border: #f2efe1;
+  --accent: #c6f24e;
+  --accent-fg: #111111;
+  --ring: #ff7a45;
+  --danger: #f85149;
+  --accent-2: #c6f24e;
+  --accent-2-fg: #111111;
+  --quote-bg: #c6f24e;
+  --quote-fg: #111111;
+  --quote-meta: #41500f;
+
+  --hm-0: #1f1f16;
+  --hm-1: #3d4a12;
+  --hm-2: #6b8a1a;
+  --hm-3: #9ecb2b;
+  --hm-4: #c6f24e;
+
+  --shadow-card: 4px 4px 0 var(--border);
+}
+
+/* --------------------------------------------------------------------------- */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-2: var(--accent-2);
+  --color-accent-2-fg: var(--accent-2-fg);
+  --color-quote-bg: var(--quote-bg);
+  --color-quote-fg: var(--quote-fg);
+  --color-quote-meta: var(--quote-meta);
+  --color-ring: var(--ring);
+  --color-danger: var(--danger);
+
+  /* The utility names stay `font-sans` / `font-mono` / `font-serif`; only what
+     they resolve to moves with the skin. `font-serif` on the quote means "the
+     quote face", which in `grid` is not a serif at all. */
+  --font-sans: var(--font-ui);
+  --font-mono: var(--font-numeric);
+  --font-serif: var(--font-quote);
+
+  --radius-card: var(--card-radius);
+  --radius-control: var(--control-radius);
+  --radius-cell: var(--cell-radius);
+}
+
+/* --------------------------------------------------------------------------- */
+
+/**
+ * Reserve the scrollbar's width whether or not one is showing. Content that
+ * grows past the viewport - the add-habit form, an expanded card - otherwise
+ * summons a classic scrollbar mid-interaction, narrowing the viewport and
+ * sliding the centred column sideways. No-op where scrollbars overlay.
+ */
+html {
+  scrollbar-gutter: stable;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-ui);
+  -webkit-tap-highlight-color: transparent;
+  /* Stop the standalone PWA from rubber-banding like a web page. */
+  overscroll-behavior-y: none;
+}
+
+/**
+ * Touch keyboards zoom the viewport in on any text field smaller than 16px and
+ * never zoom back out, so the add-habit form — which autofocuses — left the
+ * whole app scaled up after every new habit. The floor is a platform rule, not
+ * a type choice: it applies on touch only, so the designed scale is untouched
+ * on a pointer device, and the alternative (`maximum-scale=1`) buys the same
+ * fix by taking pinch-zoom away from everyone.
+ *
+ * Unlayered, so it outranks the Tailwind size utility in `@layer utilities`
+ * regardless of specificity — a field that genuinely wants to be larger on
+ * touch has to say so here rather than in a class.
+ */
+@media (pointer: coarse) {
+  :where(
+    textarea,
+    input:not([type="range"]):not([type="color"]):not([type="checkbox"]):not(
+        [type="radio"]
+      ):not([type="file"])
+  ) {
+    font-size: 16px;
+  }
+}
+
+/* One visible focus treatment everywhere. Never `outline: none` on its own. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@utility pb-safe {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+
+@utility mb-safe {
+  margin-bottom: calc(4rem + env(safe-area-inset-bottom));
+}
+
+/**
+ * The surfaces every skin has to answer for. Components ask for a role, not a
+ * stack of border/radius/shadow classes, so a skin is a token edit rather than a
+ * sweep through forty class strings.
+ *
+ * None of them set a background: the caller keeps its own `bg-*`, which is what
+ * lets a card sit on `--surface-2` without fighting utility ordering, and keeps
+ * the fill visible where you are reading the markup.
+ */
+@utility surface-card {
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-card);
+}
+
+@utility surface-dashed {
+  border: var(--border-w) dashed var(--border);
+  border-radius: var(--card-radius);
+}
+
+/**
+ * The bottom sheet's own surface (§6.7). It is flush with the bottom edge, so
+ * only the top corners are rounded and the bottom border is dropped rather than
+ * left to draw a hairline off-screen. No shadow either: `--shadow-card` is a
+ * downward offset in every skin, which under a sheet falls outside the viewport
+ * and in `blocks` would be a hard black bar. The backdrop does that job here.
+ */
+@utility surface-sheet {
+  border: var(--border-w) solid var(--border);
+  border-bottom: 0;
+  border-radius: var(--card-radius) var(--card-radius) 0 0;
+}
+
+@utility control-dashed {
+  border: var(--border-w) dashed var(--border);
+  border-radius: var(--control-radius);
+}
+
+/** Screen titles and figures. Carries the skin's display face and casing. */
+@utility display-type {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  text-transform: var(--display-transform);
+}
+
+/* Tick confirmation — DESIGN.md §6.3 */
+@keyframes openhabits-pop {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-pop {
+  animation: openhabits-pop 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/**
+ * Week turnover — DESIGN.md §6.8.
+ *
+ * 16px is chosen against the layout, not for feel: the row sits between two
+ * 28px arrows inside a 16px page gutter, so at this distance it cannot reach
+ * past them and the page cannot gain a horizontal scrollbar mid-animation.
+ * The names are the direction of travel — a later week arrives from the right.
+ */
+@keyframes openhabits-week-next {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+}
+
+@keyframes openhabits-week-prev {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+}
+
+.animate-week-next {
+  animation: openhabits-week-next 500ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.animate-week-prev {
+  animation: openhabits-week-prev 500ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/**
+ * Both ends of a drag, and nothing else: the spring back from one let go of
+ * early, and the slide that carries a neighbouring week into place when one
+ * commits. While the finger is down the row carries an inline transform and
+ * none of this, because the timing of a drag is the hand doing it.
+ *
+ * Its end is the handover — `WeekStrip` changes the day on `transitionend` —
+ * so this is the duration a committed drag waits before the week changes, and
+ * the reduced-motion block above shortening it to nothing is exactly right.
+ */
+.transition-week {
+  transition: transform 260ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* ---------------------------------------------------------------------------
+   Skin treatments that are not tokens.
+
+   Everything here hangs off `data-skin`, which is on the document before first
+   paint, so none of it can flash. Anything that needs the skin during *render*
+   goes through `lib/skin.ts:useSkin`, and only inside a hydration-gated
+   subtree.
+   --------------------------------------------------------------------------- */
+
+/* `blocks` puts the whole design on hard offsets, so the focus ring follows. */
+:root[data-skin="blocks"]
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline-width: 3px;
+  outline-offset: 3px;
+  border-radius: 0;
+}
+
+/* Its bone paper is warm enough that the default selection blue muddies it. */
+:root[data-skin="blocks"] ::selection {
+  background: var(--accent-2);
+  color: #111111;
+}
+
+/**
+ * Today's running order (`app/page.tsx` slots).
+ *
+ * `grid` is the one skin that reorders: habits first, the quote demoted to the
+ * foot of the page. Done with `order` rather than in React so it is true at
+ * first paint — see the note in `app/page.tsx`. The habit list carries a `mt-6`
+ * that only makes sense under the quote, so it is dropped when it leads.
+ */
+:root[data-skin="grid"] [data-slot="habits"] {
+  order: 1;
+}
+
+:root[data-skin="grid"] [data-slot="habits"] > section {
+  margin-top: 0;
+}
+
+:root[data-skin="grid"] [data-slot="daily"] {
+  order: 2;
+  margin-top: 2rem;
+}
+
+:root[data-skin="grid"] [data-slot="install"] {
+  order: 3;
+}
+
+/**
+ * The tab bar.
+ *
+ * `BottomNav` renders un-gated — it has no store data to wait for — so it is the
+ * one piece of chrome that must never branch on the skin in React. All of it is
+ * here, hanging off the pre-paint attribute, which is also why the markup only
+ * carries `data-slot`/`data-active` hooks rather than skin-aware classes.
+ */
+:root[data-skin="grid"] [data-slot="tab"] {
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+:root[data-skin="blocks"] [data-slot="nav"] {
+  border-top-width: var(--border-w);
+  /* The blur is a soft effect on a design with no soft edges anywhere else. */
+  backdrop-filter: none;
+  background: var(--surface);
+}
+
+:root[data-skin="blocks"] [data-slot="tab"] {
+  border-left: var(--border-w) solid var(--border);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+:root[data-skin="blocks"] li:first-child [data-slot="tab"] {
+  border-left: 0;
+}
+
+:root[data-skin="blocks"] [data-slot="tab"][data-active="true"] {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+/* ---------------------------------------------------------------------------
+   Bottom sheet — DESIGN.md §6.7
+
+   `components/Sheet.tsx` is a real `<dialog>` opened with `showModal()`, so the
+   focus trap, Escape, the inert background and the top layer are the platform's
+   problem. What is left is shape and motion, and both live here rather than in
+   the component because the exit half cannot be expressed in React at all: the
+   browser drops a dialog out of the top layer the instant `close()` runs, so
+   without `allow-discrete` on `display` and `overlay` there is nothing left on
+   screen to transition. An engine that does not know those keywords ignores all
+   three declarations and the sheet arrives and leaves instantly — which is what
+   the reduced-motion block below already asks for anyway.
+   --------------------------------------------------------------------------- */
+
+[data-slot="sheet"] {
+  transform: translateY(100%);
+  transition:
+    transform 260ms cubic-bezier(0.32, 0.72, 0, 1),
+    overlay 260ms allow-discrete,
+    display 260ms allow-discrete;
+}
+
+[data-slot="sheet"][open] {
+  transform: translateY(0);
+}
+
+@starting-style {
+  [data-slot="sheet"][open] {
+    transform: translateY(100%);
+  }
+}
+
+[data-slot="sheet"]::backdrop {
+  background: rgb(0 0 0 / 0.45);
+  opacity: 0;
+  transition:
+    opacity 260ms ease,
+    overlay 260ms allow-discrete,
+    display 260ms allow-discrete;
+}
+
+[data-slot="sheet"][open]::backdrop {
+  opacity: 1;
+}
+
+@starting-style {
+  [data-slot="sheet"][open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/**
+ * A modal dialog makes the page behind it inert, but not unscrollable — a drag
+ * over the backdrop still scrolls Today underneath the sheet. Safe against the
+ * sideways lurch the `scrollbar-gutter` rule above exists to prevent, because
+ * the gutter stays reserved while the scrollbar goes.
+ */
+html:has(dialog[open]) {
+  overflow: hidden;
+}

@@ -1,0 +1,2 @@
+# Mounted into a Linux container as-is; a CRLF checkout breaks the shebang.
+*.sh text eol=lf
