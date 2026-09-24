@@ -15,6 +15,31 @@
   opacity: 0;
 }
 
+/* A tap: every creature hops, on a group of its own so it composes with any idle. */
+[data-creature] [data-poked] {
+  animation: poke-hop 0.7s step-end;
+}
+@keyframes poke-hop {
+  0%,
+  50% {
+    transform: translateY(-1px);
+  }
+  12%,
+  38% {
+    transform: translateY(-2px);
+  }
+  25% {
+    transform: translateY(-3px);
+  }
+  62%,
+  88% {
+    transform: none;
+  }
+  75% {
+    transform: translateY(-1px);
+  }
+}
+
 /* Sproutle: the leaf sways; the morning's drop lands on it and it perks up. */
 [data-creature="sproutle"] [data-part="leaf"] {
   animation: idle-sproutle-leaf 7.2s step-end infinite;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, type CSSProperties } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 import { CREATURES, discoveries, QUALIFYING_RATE } from "@/lib/creatures";
 import { buildHistory, firstDayOf } from "@/lib/history";
 import { useOpenHabits } from "@/lib/store";
@@ -93,6 +93,7 @@ function Sprite({
   creature: Creature;
   silhouette: boolean;
 }) {
+  const [poked, setPoked] = useState(false);
   const size = creature.sprite.length;
   const rig = silhouette ? undefined : creature.rig;
   const parts = Object.entries(rig?.parts ?? {});
@@ -117,7 +118,7 @@ function Sprite({
     Object.entries(creature.colors).map(([key, hex]) => [`--${key}`, hex]),
   ) as CSSProperties;
 
-  return (
+  const svg = (
     <svg
       viewBox={`0 0 ${size} ${size}`}
       width={72}
@@ -130,21 +131,39 @@ function Sprite({
       aria-label={silhouette ? "Undiscovered creature" : creature.name}
     >
       <g>
-        {pixels
-          .filter((p) => !parts.some(([, box]) => inside(p, box)))
-          .map(draw)}
-        {Object.entries(rig?.fx ?? {}).map(([name, fx]) => (
-          <g key={name} data-fx={name}>
-            {fx.map(draw)}
-          </g>
-        ))}
-        {parts.map(([name, box]) => (
-          <g key={name} data-part={name}>
-            {pixels.filter((p) => inside(p, box)).map(draw)}
-          </g>
-        ))}
+        <g
+          data-poked={poked || undefined}
+          onAnimationEnd={(e) =>
+            e.target === e.currentTarget && setPoked(false)
+          }
+        >
+          {pixels
+            .filter((p) => !parts.some(([, box]) => inside(p, box)))
+            .map(draw)}
+          {Object.entries(rig?.fx ?? {}).map(([name, fx]) => (
+            <g key={name} data-fx={name}>
+              {fx.map(draw)}
+            </g>
+          ))}
+          {parts.map(([name, box]) => (
+            <g key={name} data-part={name}>
+              {pixels.filter((p) => inside(p, box)).map(draw)}
+            </g>
+          ))}
+        </g>
       </g>
     </svg>
+  );
+
+  if (!rig) return svg;
+  return (
+    <button
+      type="button"
+      onClick={() => setPoked(true)}
+      className="cursor-pointer touch-manipulation"
+    >
+      {svg}
+    </button>
   );
 }
 
