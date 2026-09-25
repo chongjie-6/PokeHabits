@@ -377,6 +377,8 @@ Every finished week in which at least `QUALIFYING_RATE` (80%) of scheduled habit
 
 **Every sprite is original.** They are pixel maps drawn in the corpus file, not image files. Art from elsewhere ships only under a licence that allows it, and never a character someone else owns: no Pokémon, no Poké- names, no ball iconography.
 
+**Tangling's line is a family, not one creature growing**: each guardian is the next generation's, after the protagonists' stands in JoJo's Bizarre Adventure, and each is followed by its evolved form. An evolution takes the stand's own later form where the story gives it one — stopped time, a return to zero, infinite rotation, a bubble that isn't there — and otherwise what its user learned to do with it. What each one _does_ is the whole of the borrowing. A power is an idea; a stand's name, design or silhouette is someone's character, and the rule above holds for those. The other nods are of the same kind: every member carries the family's star, each blurb hides one catchphrase, and a tap strikes a pose instead of the hop.
+
 ---
 
 ## 6. Visual design

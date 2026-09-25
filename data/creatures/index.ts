@@ -18,6 +18,10 @@ import pebblit from "./pebblit";
 import glimmoth from "./glimmoth";
 import frostnib from "./frostnib";
 import duskmolt from "./duskmolt";
+import stonkey from "./stonkey";
+import spurling from "./spurling";
+import gainlet from "./gainlet";
+import tangling from "./tangling";
 
 export const CREATURES: Creature[] = [
   ...sproutle,
@@ -29,4 +33,8 @@ export const CREATURES: Creature[] = [
   ...glimmoth,
   ...frostnib,
   ...duskmolt,
+  ...stonkey,
+  ...spurling,
+  ...gainlet,
+  ...tangling,
 ];

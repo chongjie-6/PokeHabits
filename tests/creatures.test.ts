@@ -57,9 +57,9 @@ describe("discoveries", () => {
     ).flat();
     const bad = [...week(1, 1), ...week(0, 1), ...week(1, 1)];
     expect(discoveries(stats(bad), "2027-01-01", 1).found).toBe(2);
-    expect(discoveries(stats(good), "2027-06-01", 1).found).toBe(
-      CREATURES.length,
-    );
+    expect(
+      discoveries(stats(good), addDays("2026-08-03", good.length), 1).found,
+    ).toBe(CREATURES.length);
   });
 });
 

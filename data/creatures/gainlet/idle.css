@@ -1,0 +1,110 @@
+/* Gainlet: flexes its little arm twice, checks, and sweats a single drop over what isn't there yet. */
+[data-creature="gainlet"] [data-part="arm"] {
+  animation: idle-gainlet-flex 6s step-end infinite;
+}
+[data-creature="gainlet"] [data-fx="sweat"] {
+  animation: idle-gainlet-sweat 6s step-end infinite;
+}
+@keyframes idle-gainlet-flex {
+  16% {
+    transform: translateY(-1px);
+  }
+  24% {
+    transform: none;
+  }
+  32% {
+    transform: translateY(-1px);
+  }
+  46% {
+    transform: none;
+  }
+}
+@keyframes idle-gainlet-sweat {
+  46% {
+    opacity: 1;
+  }
+  50% {
+    transform: translate(1px, -1px);
+  }
+  54% {
+    opacity: 0.5;
+    transform: translate(2px, -1px);
+  }
+  58% {
+    opacity: 0;
+  }
+}
+
+/* Repcroak: three curls, and its throat puffs out on every one — a croak per rep. */
+[data-creature="repcroak"] [data-part="bell"] {
+  animation: idle-repcroak-curl 6.4s step-end infinite;
+}
+[data-creature="repcroak"] [data-fx="sac"] {
+  animation: idle-repcroak-croak 6.4s step-end infinite;
+}
+@keyframes idle-repcroak-curl {
+  14%,
+  30%,
+  46% {
+    transform: translateY(1px);
+  }
+  20%,
+  36%,
+  52% {
+    transform: none;
+  }
+}
+@keyframes idle-repcroak-croak {
+  20%,
+  36%,
+  52% {
+    opacity: 1;
+  }
+  26%,
+  42%,
+  58% {
+    opacity: 0;
+  }
+}
+
+/* Croaklossus: two deep squats under the bar, eyes squeezed shut at the bottom; it drives the second one up hard enough to raise dust. */
+[data-creature="croaklossus"] [data-part="top"] {
+  animation: idle-croaklossus-squat 7.2s step-end infinite;
+}
+[data-creature="croaklossus"] [data-px="w"] {
+  animation: idle-croaklossus-strain 7.2s step-end infinite;
+}
+[data-creature="croaklossus"] [data-fx="dust"] {
+  animation: idle-croaklossus-dust 7.2s step-end infinite;
+}
+@keyframes idle-croaklossus-squat {
+  20%,
+  44% {
+    transform: translateY(1px);
+  }
+  32%,
+  56% {
+    transform: none;
+  }
+}
+@keyframes idle-croaklossus-strain {
+  20%,
+  44% {
+    fill: var(--b);
+  }
+  32%,
+  56% {
+    fill: var(--w);
+  }
+}
+@keyframes idle-croaklossus-dust {
+  56% {
+    opacity: 1;
+  }
+  62% {
+    opacity: 0.5;
+  }
+  66% {
+    opacity: 0;
+  }
+}

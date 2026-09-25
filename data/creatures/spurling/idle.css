@@ -1,0 +1,229 @@
+/* Spurling: headbutts something and chips a spine; it winces, the spine grows back, and gleams a little harder. */
+[data-creature="spurling"] > g {
+  animation: idle-spurling-butt 6.8s step-end infinite;
+}
+[data-creature="spurling"] [data-part="spine"] {
+  animation: idle-spurling-spine 6.8s step-end infinite;
+}
+[data-creature="spurling"] [data-part="spine"] [data-px="s"] {
+  animation: idle-spurling-gleam 6.8s step-end infinite;
+}
+[data-creature="spurling"] [data-fx="chip"] {
+  animation: idle-spurling-chip 6.8s step-end infinite;
+}
+[data-creature="spurling"] [data-px="w"] {
+  animation: idle-spurling-wince 6.8s step-end infinite;
+}
+@keyframes idle-spurling-butt {
+  18% {
+    transform: translateY(-1px);
+  }
+  22% {
+    transform: translateY(1px);
+  }
+  26% {
+    transform: none;
+  }
+}
+@keyframes idle-spurling-spine {
+  22% {
+    opacity: 0;
+  }
+  56% {
+    opacity: 1;
+    transform: translateY(1px);
+  }
+  62% {
+    transform: none;
+  }
+}
+@keyframes idle-spurling-gleam {
+  62% {
+    fill: var(--l);
+  }
+  74% {
+    fill: var(--s);
+  }
+}
+@keyframes idle-spurling-chip {
+  22% {
+    opacity: 1;
+  }
+  25% {
+    transform: translate(1px, -2px);
+  }
+  28% {
+    transform: translate(2px, -3px);
+  }
+  31% {
+    transform: translate(3px, -2px);
+  }
+  34% {
+    opacity: 0.5;
+    transform: translateX(4px);
+  }
+  37% {
+    opacity: 0;
+  }
+}
+@keyframes idle-spurling-wince {
+  22% {
+    fill: var(--o);
+  }
+  30% {
+    fill: var(--w);
+  }
+}
+
+/* Quillrend: hunches and flings its tall spine skyward; it grows back pale, then hardens black. */
+[data-creature="quillrend"] > g {
+  animation: idle-quillrend-fling 7.6s step-end infinite;
+}
+[data-creature="quillrend"] [data-part="spine"] {
+  animation: idle-quillrend-spine 7.6s step-end infinite;
+}
+[data-creature="quillrend"] [data-part="spine"] [data-px="k"] {
+  animation: idle-quillrend-harden 7.6s step-end infinite;
+}
+[data-creature="quillrend"] [data-fx="volley"] {
+  animation: idle-quillrend-volley 7.6s step-end infinite;
+}
+@keyframes idle-quillrend-fling {
+  20% {
+    transform: translateY(1px);
+  }
+  30% {
+    transform: translateY(-1px);
+  }
+  34% {
+    transform: none;
+  }
+}
+@keyframes idle-quillrend-spine {
+  30% {
+    opacity: 0;
+  }
+  52% {
+    opacity: 1;
+    transform: translateY(1px);
+  }
+  58% {
+    transform: none;
+  }
+}
+@keyframes idle-quillrend-harden {
+  52% {
+    fill: var(--s);
+  }
+  66% {
+    fill: var(--l);
+  }
+  80% {
+    fill: var(--k);
+  }
+}
+@keyframes idle-quillrend-volley {
+  30% {
+    opacity: 1;
+  }
+  32% {
+    transform: translateY(-2px);
+  }
+  34% {
+    transform: translateY(-5px);
+  }
+  36% {
+    opacity: 0.5;
+    transform: translateY(-9px);
+  }
+  38% {
+    opacity: 0;
+  }
+}
+
+/* Wrathorn: crouches, leaps with its wing raised, and dives onto the day; its spines shatter off, grow back pale, and harden black. */
+[data-creature="wrathorn"] > g {
+  animation: idle-wrathorn-dive 8s step-end infinite;
+}
+[data-creature="wrathorn"] [data-fx="root"] {
+  opacity: 1;
+}
+[data-creature="wrathorn"] [data-part="wing"] {
+  animation: idle-wrathorn-wing 8s step-end infinite;
+}
+[data-creature="wrathorn"] [data-px="k"] {
+  animation: idle-wrathorn-regrow 8s step-end infinite;
+}
+[data-creature="wrathorn"] [data-fx^="burst"] {
+  animation: idle-wrathorn-burst 8s step-end infinite;
+}
+[data-creature="wrathorn"] [data-fx="burstB"] {
+  animation-delay: 0.24s;
+}
+[data-creature="wrathorn"] [data-fx="burstC"] {
+  animation-delay: 0.48s;
+}
+[data-creature="wrathorn"] [data-fx="dust"] {
+  animation: idle-wrathorn-dust 8s step-end infinite;
+}
+@keyframes idle-wrathorn-dive {
+  30% {
+    transform: translateY(1px);
+  }
+  36% {
+    transform: translateY(-1px);
+  }
+  38% {
+    transform: translateY(-3px);
+  }
+  46% {
+    transform: translateY(-2px);
+  }
+  48% {
+    transform: none;
+  }
+  50% {
+    transform: translateY(1px);
+  }
+  54% {
+    transform: none;
+  }
+}
+@keyframes idle-wrathorn-wing {
+  36% {
+    transform: translateY(-1px);
+  }
+  48% {
+    transform: none;
+  }
+}
+@keyframes idle-wrathorn-regrow {
+  50% {
+    fill: var(--s);
+  }
+  66% {
+    fill: var(--l);
+  }
+  82% {
+    fill: var(--k);
+  }
+}
+@keyframes idle-wrathorn-burst {
+  50% {
+    opacity: 1;
+  }
+  53% {
+    opacity: 0;
+  }
+}
+@keyframes idle-wrathorn-dust {
+  50% {
+    opacity: 1;
+  }
+  56% {
+    opacity: 0.5;
+  }
+  60% {
+    opacity: 0;
+  }
+}

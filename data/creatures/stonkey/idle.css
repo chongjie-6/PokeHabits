@@ -1,0 +1,147 @@
+/* Stonkey: lifts its lid, looks one way and the other, and ducks back in. */
+[data-creature="stonkey"] [data-part="lid"] {
+  animation: idle-stonkey-lid 6s step-end infinite;
+}
+[data-creature="stonkey"] [data-fx="scalp"] {
+  animation: idle-stonkey-scalp 6s step-end infinite;
+}
+[data-creature="stonkey"] [data-px="w"] {
+  animation: idle-stonkey-shine 6s step-end infinite;
+}
+[data-creature="stonkey"] [data-px="e"] {
+  animation: idle-stonkey-pupil 6s step-end infinite;
+}
+@keyframes idle-stonkey-lid {
+  30%,
+  62% {
+    transform: translateY(-1px);
+  }
+  34% {
+    transform: translateY(-2px);
+  }
+  66% {
+    transform: none;
+  }
+}
+@keyframes idle-stonkey-scalp {
+  30% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0;
+  }
+}
+/* Swapping shine and pupil turns the eyes from right to left. */
+@keyframes idle-stonkey-shine {
+  40% {
+    fill: var(--e);
+  }
+  50% {
+    fill: var(--w);
+  }
+}
+@keyframes idle-stonkey-pupil {
+  40% {
+    fill: var(--w);
+  }
+  50% {
+    fill: var(--e);
+  }
+}
+
+/* Staffling: its staff grows three pixels, shrinks back, then twitches once more to check. */
+[data-creature="staffling"] [data-part="tip"] {
+  animation: idle-staffling-tip 6.4s step-end infinite;
+}
+[data-creature="staffling"] [data-fx="shaft"] {
+  animation: idle-staffling-shaft 6.4s step-end infinite;
+}
+@keyframes idle-staffling-tip {
+  20%,
+  50%,
+  70% {
+    transform: translateY(-1px);
+  }
+  22%,
+  48% {
+    transform: translateY(-2px);
+  }
+  24% {
+    transform: translateY(-3px);
+  }
+  52%,
+  74% {
+    transform: none;
+  }
+}
+/* The tip is drawn over the shaft, so the whole shaft can show at once. */
+@keyframes idle-staffling-shaft {
+  20%,
+  70% {
+    opacity: 1;
+  }
+  52%,
+  74% {
+    opacity: 0;
+  }
+}
+
+/* Cloudsage: bobs on its cloud, then somersaults and lands hard enough to knock a puff loose. */
+[data-creature="cloudsage"] > g {
+  animation: idle-cloudsage-float 7.2s step-end infinite;
+}
+[data-creature="cloudsage"] [data-part="body"] {
+  transform-origin: center;
+  animation: idle-cloudsage-flip 7.2s step-end infinite;
+}
+[data-creature="cloudsage"] [data-fx="puff"] {
+  animation: idle-cloudsage-puff 7.2s step-end infinite;
+}
+@keyframes idle-cloudsage-float {
+  10%,
+  72% {
+    transform: translateY(-1px);
+  }
+  20%,
+  54%,
+  84% {
+    transform: none;
+  }
+  51% {
+    transform: translateY(1px);
+  }
+}
+/* The body's drawn box is 18 by 14; an even difference keeps quarter turns on the grid. */
+@keyframes idle-cloudsage-flip {
+  36%,
+  48% {
+    transform: translateY(-1px);
+  }
+  39% {
+    transform: translateY(-2px) rotate(-90deg);
+  }
+  42% {
+    transform: translateY(-3px) rotate(-180deg);
+  }
+  45% {
+    transform: translateY(-2px) rotate(-270deg);
+  }
+  51% {
+    transform: none;
+  }
+}
+@keyframes idle-cloudsage-puff {
+  51% {
+    opacity: 1;
+  }
+  55% {
+    transform: translateX(-1px);
+  }
+  59% {
+    opacity: 0.5;
+    transform: translateX(-2px);
+  }
+  63% {
+    opacity: 0;
+  }
+}
