@@ -8,6 +8,9 @@ import { useToday } from "@/lib/use-today";
 import type { Creature, Pixel, PixelBox } from "@/lib/types";
 import "./idle.css";
 
+const SCALE = 6;
+const STAGE = Math.max(...CREATURES.map((c) => c.sprite.length)) * SCALE;
+
 export default function DexPage() {
   const { hydrated, habits, entries, settings } = useOpenHabits();
   const today = useToday(settings.dayStartHour);
@@ -72,7 +75,9 @@ export default function DexPage() {
               <p className="self-start font-mono text-[11px] tabular-nums text-muted">
                 #{String(index + 1).padStart(3, "0")}
               </p>
-              <Sprite creature={creature} silhouette={!known} />
+              <div className="flex items-end" style={{ height: STAGE }}>
+                <Sprite creature={creature} silhouette={!known} />
+              </div>
               <p className="mt-2 text-[13px] font-medium">
                 {known ? creature.name : "???"}
               </p>
@@ -124,8 +129,8 @@ function Sprite({
   const svg = (
     <svg
       viewBox={`0 0 ${size} ${size}`}
-      width={size * 6}
-      height={size * 6}
+      width={size * SCALE}
+      height={size * SCALE}
       shapeRendering="crispEdges"
       className={silhouette ? "text-muted" : "overflow-visible"}
       data-creature={rig && creature.id}
