@@ -154,7 +154,8 @@ export type Creature = {
   sprite: string[];
   /**
    * Idle animation (§5.5): `parts` lift boxes out of the sprite to move on their
-   * own, `fx` adds pixels shown only mid-loop. `app/dex/idle.css` animates both by name.
+   * own, `fx` adds pixels shown only mid-loop. The `idle.css` beside the sprite
+   * animates both by name.
    */
   rig?: { parts?: Record<string, PixelBox>; fx?: Record<string, Pixel[]> };
 };

@@ -1,0 +1,145 @@
+/* Duskmolt: rears off its wing-arms and flares them, feelers out; a scale falls and the gold beneath glints. */
+[data-creature="duskmolt"] > g {
+  animation: idle-duskmolt-rear 8s step-end infinite;
+}
+[data-creature="duskmolt"] [data-part="wingL"] {
+  animation: idle-duskmolt-wing-l 8s step-end infinite;
+}
+[data-creature="duskmolt"] [data-part="wingR"] {
+  animation: idle-duskmolt-wing-r 8s step-end infinite;
+}
+[data-creature="duskmolt"] [data-fx="feelers"] {
+  animation: idle-duskmolt-feelers 8s step-end infinite;
+}
+[data-creature="duskmolt"] [data-fx="scale"] {
+  animation: idle-duskmolt-scale 8s step-end infinite;
+}
+[data-creature="duskmolt"] [data-px="l"] {
+  animation: idle-duskmolt-gold 8s step-end infinite;
+}
+@keyframes idle-duskmolt-rear {
+  43% {
+    transform: translateY(-1px);
+  }
+  60% {
+    transform: none;
+  }
+}
+@keyframes idle-duskmolt-wing-l {
+  40%,
+  58% {
+    transform: translateX(-1px);
+  }
+  43% {
+    transform: translate(-2px, -1px);
+  }
+  60% {
+    transform: none;
+  }
+}
+@keyframes idle-duskmolt-wing-r {
+  40%,
+  58% {
+    transform: translateX(1px);
+  }
+  43% {
+    transform: translate(2px, -1px);
+  }
+  60% {
+    transform: none;
+  }
+}
+@keyframes idle-duskmolt-feelers {
+  43% {
+    opacity: 1;
+  }
+  58% {
+    opacity: 0;
+  }
+}
+@keyframes idle-duskmolt-scale {
+  62% {
+    opacity: 1;
+  }
+  66% {
+    transform: translate(1px, 2px);
+  }
+  70% {
+    transform: translateY(4px);
+  }
+  74% {
+    opacity: 0.5;
+    transform: translate(1px, 6px);
+  }
+  78% {
+    opacity: 0;
+  }
+}
+@keyframes idle-duskmolt-gold {
+  66% {
+    fill: #fff3c4;
+  }
+  76% {
+    fill: var(--l);
+  }
+}
+
+/* Dawnmolt: blinks, stretches its wings high; the downstroke sheds light where Duskmolt shed scales. */
+[data-creature="dawnmolt"] [data-part^="wing"] {
+  animation: idle-dawnmolt-wings 7s step-end infinite;
+}
+[data-creature="dawnmolt"] [data-fx^="mote"] {
+  animation: idle-dawnmolt-mote 7s step-end infinite;
+}
+[data-creature="dawnmolt"] [data-fx="moteB"] {
+  animation-delay: 0.28s;
+}
+[data-creature="dawnmolt"] [data-px="l"] {
+  animation: idle-dawnmolt-glow 7s step-end infinite;
+}
+[data-creature="dawnmolt"] [data-px="w"] {
+  animation: idle-dawnmolt-blink 7s step-end infinite;
+}
+@keyframes idle-dawnmolt-wings {
+  30%,
+  46% {
+    transform: translateY(-1px);
+  }
+  34% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: none;
+  }
+}
+@keyframes idle-dawnmolt-mote {
+  50% {
+    opacity: 1;
+  }
+  54% {
+    transform: translateY(-1px);
+  }
+  58% {
+    opacity: 0.5;
+    transform: translateY(-2px);
+  }
+  62% {
+    opacity: 0;
+  }
+}
+@keyframes idle-dawnmolt-glow {
+  50% {
+    fill: #fff;
+  }
+  62% {
+    fill: var(--l);
+  }
+}
+@keyframes idle-dawnmolt-blink {
+  16% {
+    fill: var(--o);
+  }
+  19% {
+    fill: var(--w);
+  }
+}

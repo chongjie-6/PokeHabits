@@ -1,0 +1,124 @@
+/* Glimmoth: flutters in bursts, its wing spots glimmer, the air twinkles. */
+[data-creature="glimmoth"] > g {
+  animation: idle-glimmoth-drift 3.6s step-end infinite;
+}
+[data-creature="glimmoth"] [data-part="wingL"] {
+  transform-origin: right;
+  animation: idle-glimmoth-wing 3.6s step-end infinite;
+}
+[data-creature="glimmoth"] [data-part="wingR"] {
+  transform-origin: left;
+  animation: idle-glimmoth-wing 3.6s step-end infinite;
+}
+[data-creature="glimmoth"] [data-px="w"] {
+  animation: idle-glimmoth-glimmer 2.4s step-end infinite;
+}
+[data-creature="glimmoth"] [data-fx="glint"] {
+  animation: idle-glimmoth-glint 4.2s step-end infinite;
+}
+[data-creature="glimmoth"] [data-fx="rays"] {
+  animation: idle-glimmoth-rays 4.2s step-end infinite;
+}
+@keyframes idle-glimmoth-drift {
+  4% {
+    transform: translateY(-1px);
+  }
+  40% {
+    transform: none;
+  }
+}
+@keyframes idle-glimmoth-wing {
+  4%,
+  12%,
+  20% {
+    transform: scaleX(0.5);
+  }
+  8%,
+  16%,
+  24% {
+    transform: none;
+  }
+}
+@keyframes idle-glimmoth-glimmer {
+  50% {
+    fill: #fff;
+  }
+  62% {
+    fill: var(--w);
+  }
+}
+@keyframes idle-glimmoth-glint {
+  40% {
+    opacity: 1;
+  }
+  52% {
+    opacity: 0;
+  }
+}
+@keyframes idle-glimmoth-rays {
+  44% {
+    opacity: 1;
+  }
+  48% {
+    opacity: 0;
+  }
+}
+
+/* Lanthorn: hovers on slow wingbeats; the lantern flares and flickers, but never goes out. */
+[data-creature="lanthorn"] > g {
+  animation: idle-lanthorn-hover 6s step-end infinite;
+}
+[data-creature="lanthorn"] [data-part="wingL"] {
+  transform-origin: right;
+  animation: idle-lanthorn-wing 6s step-end infinite;
+}
+[data-creature="lanthorn"] [data-part="wingR"] {
+  transform-origin: left;
+  animation: idle-lanthorn-wing 6s step-end infinite;
+}
+[data-creature="lanthorn"] [data-px="g"] {
+  animation: idle-lanthorn-flicker 6s step-end infinite;
+}
+[data-creature="lanthorn"] [data-fx="halo"] {
+  animation: idle-lanthorn-halo 6s step-end infinite;
+}
+@keyframes idle-lanthorn-hover {
+  25% {
+    transform: translateY(-1px);
+  }
+  75% {
+    transform: none;
+  }
+}
+@keyframes idle-lanthorn-wing {
+  20%,
+  70% {
+    transform: scaleX(0.5);
+  }
+  28%,
+  78% {
+    transform: none;
+  }
+}
+@keyframes idle-lanthorn-flicker {
+  40% {
+    fill: #fff6d6;
+  }
+  52%,
+  56%,
+  60% {
+    fill: var(--g);
+  }
+  54%,
+  58% {
+    fill: #e8a83e;
+  }
+}
+@keyframes idle-lanthorn-halo {
+  40% {
+    opacity: 1;
+  }
+  52% {
+    opacity: 0;
+  }
+}

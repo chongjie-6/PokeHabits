@@ -1,0 +1,157 @@
+/* Drizzlet: its tip wobbles; it sheds one drop, which pools and evaporates. */
+[data-creature="drizzlet"] > g {
+  animation: idle-drizzlet-shed 6.4s step-end infinite;
+}
+[data-creature="drizzlet"] [data-part="tip"] {
+  animation: idle-drizzlet-tip 1.6s step-end infinite;
+}
+[data-creature="drizzlet"] [data-fx="drop"] {
+  animation: idle-drizzlet-drop 6.4s step-end infinite;
+}
+[data-creature="drizzlet"] [data-fx="puddle"] {
+  transform-origin: center;
+  animation: idle-drizzlet-puddle 6.4s step-end infinite;
+}
+@keyframes idle-drizzlet-shed {
+  56% {
+    transform: translateY(-1px);
+  }
+  62% {
+    transform: none;
+  }
+}
+@keyframes idle-drizzlet-tip {
+  25% {
+    transform: translateX(1px);
+  }
+  50% {
+    transform: none;
+  }
+  75% {
+    transform: translateX(-1px);
+  }
+}
+@keyframes idle-drizzlet-drop {
+  50% {
+    opacity: 1;
+  }
+  56% {
+    transform: translateY(2px);
+  }
+  62% {
+    opacity: 0;
+  }
+}
+@keyframes idle-drizzlet-puddle {
+  62% {
+    opacity: 1;
+    transform: scaleX(0.3334);
+  }
+  68% {
+    transform: scaleX(0.6667);
+  }
+  74% {
+    transform: none;
+  }
+  88% {
+    opacity: 0.5;
+  }
+  94% {
+    opacity: 0;
+  }
+}
+
+/* Ripplet: catches a drop on its tip, and each ring of the ripple reaches a little further. */
+[data-creature="ripplet"] [data-fx="drop"] {
+  animation: idle-ripplet-drop 6s step-end infinite;
+}
+[data-creature="ripplet"] [data-fx^="ring"] {
+  animation: idle-ripplet-ring 6s step-end infinite;
+}
+[data-creature="ripplet"] [data-fx="ring2"] {
+  animation-delay: 0.24s;
+}
+[data-creature="ripplet"] [data-fx="ring3"] {
+  animation-delay: 0.48s;
+}
+@keyframes idle-ripplet-drop {
+  24% {
+    opacity: 1;
+  }
+  28% {
+    transform: translateY(1px);
+  }
+  32% {
+    opacity: 0;
+  }
+}
+@keyframes idle-ripplet-ring {
+  32% {
+    opacity: 1;
+  }
+  36% {
+    opacity: 0;
+  }
+}
+
+/* Stillmere: its fish leaps clean over its head and splashes home; the lake sloshes, then is still. */
+[data-creature="stillmere"] > g {
+  animation: idle-stillmere-slosh 8.8s step-end infinite;
+}
+[data-creature="stillmere"] [data-fx="koi"] {
+  opacity: 1;
+  animation: idle-stillmere-koi 8.8s step-end infinite;
+}
+[data-creature="stillmere"] [data-fx="leap"] {
+  animation: idle-stillmere-leap 8.8s step-end infinite;
+}
+[data-creature="stillmere"] [data-fx^="splash"] {
+  animation: idle-stillmere-splash 8.8s step-end infinite;
+}
+[data-creature="stillmere"] [data-fx="splashIn"] {
+  animation-delay: 1.32s;
+}
+@keyframes idle-stillmere-slosh {
+  55% {
+    transform: translateY(1px);
+  }
+  58% {
+    transform: none;
+  }
+}
+@keyframes idle-stillmere-koi {
+  40% {
+    opacity: 0;
+  }
+  62% {
+    opacity: 1;
+  }
+}
+@keyframes idle-stillmere-leap {
+  40% {
+    opacity: 1;
+  }
+  43% {
+    transform: translate(-3px, -3px);
+  }
+  46% {
+    transform: translate(-6px, -4px);
+  }
+  49% {
+    transform: translate(-9px, -4px);
+  }
+  52% {
+    transform: translate(-12px, -1px);
+  }
+  55% {
+    opacity: 0;
+  }
+}
+@keyframes idle-stillmere-splash {
+  40% {
+    opacity: 1;
+  }
+  43% {
+    opacity: 0;
+  }
+}

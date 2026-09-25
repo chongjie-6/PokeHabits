@@ -1,0 +1,135 @@
+/* Gustling: bobs on the breeze; a gust streams past, pushes it and it flutters. */
+[data-creature="gustling"] > g {
+  animation: idle-gustling-ride 7.6s step-end infinite;
+}
+[data-creature="gustling"] [data-part="wing"] {
+  animation: idle-gustling-wing 7.6s step-end infinite;
+}
+[data-creature="gustling"] [data-fx^="gust"] {
+  animation: idle-gustling-gust 7.6s step-end infinite;
+}
+[data-creature="gustling"] [data-fx="gustB"] {
+  animation-delay: 0.2s;
+}
+@keyframes idle-gustling-ride {
+  12%,
+  37%,
+  87% {
+    transform: translateY(-1px);
+  }
+  25%,
+  50%,
+  72%,
+  94% {
+    transform: none;
+  }
+  58%,
+  66% {
+    transform: translateX(1px);
+  }
+  62% {
+    transform: translate(1px, -1px);
+  }
+}
+@keyframes idle-gustling-wing {
+  58%,
+  62%,
+  66% {
+    transform: translateY(-1px);
+  }
+  60%,
+  64%,
+  68% {
+    transform: none;
+  }
+}
+@keyframes idle-gustling-gust {
+  52% {
+    opacity: 1;
+  }
+  56% {
+    transform: translateX(3px);
+  }
+  60% {
+    transform: translateX(6px);
+  }
+  64% {
+    opacity: 0.5;
+    transform: translateX(9px);
+  }
+  68% {
+    opacity: 0;
+  }
+}
+
+/* Galecrest: beats its wing three times and the wind streams out behind it, crest swept back. */
+[data-creature="galecrest"] > g {
+  animation: idle-galecrest-lift 6s step-end infinite;
+}
+[data-creature="galecrest"] [data-part="wing"] {
+  animation: idle-galecrest-wing 6s step-end infinite;
+}
+[data-creature="galecrest"] [data-part="crest"] {
+  animation: idle-galecrest-crest 6s step-end infinite;
+}
+[data-creature="galecrest"] [data-fx^="gust"] {
+  animation: idle-galecrest-gust 6s step-end infinite;
+}
+[data-creature="galecrest"] [data-fx="gustB"] {
+  animation-delay: 0.3s;
+}
+@keyframes idle-galecrest-wing {
+  40%,
+  50%,
+  60% {
+    transform: translateY(1px);
+  }
+  43%,
+  53%,
+  63% {
+    transform: translateY(2px);
+  }
+  46%,
+  56%,
+  66% {
+    transform: none;
+  }
+}
+@keyframes idle-galecrest-lift {
+  44%,
+  54%,
+  64% {
+    transform: translateY(-1px);
+  }
+  48%,
+  58%,
+  72% {
+    transform: none;
+  }
+}
+@keyframes idle-galecrest-crest {
+  43% {
+    transform: translateX(-1px);
+  }
+  72% {
+    transform: none;
+  }
+}
+@keyframes idle-galecrest-gust {
+  44% {
+    opacity: 1;
+  }
+  48% {
+    transform: translateX(-3px);
+  }
+  52% {
+    transform: translateX(-6px);
+  }
+  56% {
+    opacity: 0.5;
+    transform: translateX(-9px);
+  }
+  60% {
+    opacity: 0;
+  }
+}

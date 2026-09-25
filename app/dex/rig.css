@@ -1,0 +1,42 @@
+/**
+ * What every idle loop builds on — DESIGN.md §5.5. The loops themselves live
+ * beside each evolution line's sprites, in `data/creatures/<line>/idle.css`.
+ *
+ * Inside the sprite's SVG, 1px is one sprite pixel. Every move is a whole pixel
+ * held with `step-end`, so the art never leaves its grid. Effect pixels are
+ * hidden at rest, which is what lets the reduced-motion rule in globals.css cut
+ * every loop short and still leave each creature in its drawn pose.
+ */
+
+[data-creature] g {
+  transform-box: fill-box;
+}
+
+[data-creature] [data-fx] {
+  opacity: 0;
+}
+
+/* A tap: every creature hops, on a group of its own so it composes with any idle. */
+[data-creature] [data-poked] {
+  animation: poke-hop 0.7s step-end;
+}
+@keyframes poke-hop {
+  0%,
+  50% {
+    transform: translateY(-1px);
+  }
+  12%,
+  38% {
+    transform: translateY(-2px);
+  }
+  25% {
+    transform: translateY(-3px);
+  }
+  62%,
+  88% {
+    transform: none;
+  }
+  75% {
+    transform: translateY(-1px);
+  }
+}

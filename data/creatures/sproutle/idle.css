@@ -1,0 +1,163 @@
+/* Sproutle: the leaf sways; the morning's drop lands on it and it perks up. */
+[data-creature="sproutle"] [data-part="leaf"] {
+  animation: idle-sproutle-leaf 7.2s step-end infinite;
+}
+[data-creature="sproutle"] [data-fx="drop"] {
+  animation: idle-sproutle-drop 7.2s step-end infinite;
+}
+[data-creature="sproutle"] [data-px="w"] {
+  animation: idle-sproutle-eyes 7.2s step-end infinite;
+}
+@keyframes idle-sproutle-leaf {
+  8%,
+  42% {
+    transform: translateX(1px);
+  }
+  25%,
+  58% {
+    transform: translateX(-1px);
+  }
+  17%,
+  33%,
+  50%,
+  84% {
+    transform: none;
+  }
+  66% {
+    transform: translateY(-1px);
+  }
+}
+@keyframes idle-sproutle-drop {
+  56% {
+    opacity: 1;
+  }
+  61% {
+    transform: translateY(1px);
+  }
+  66% {
+    opacity: 0;
+  }
+}
+@keyframes idle-sproutle-eyes {
+  66% {
+    fill: var(--o);
+  }
+  84% {
+    fill: var(--w);
+  }
+}
+
+/* Bloomkin: raises its leaves, waters its own bud, and blushes when it blooms. */
+[data-creature="bloomkin"] [data-part^="leaf"] {
+  animation: idle-bloomkin-leaves 7.2s step-end infinite;
+}
+[data-creature="bloomkin"] [data-fx="drop"] {
+  animation: idle-bloomkin-drop 7.2s step-end infinite;
+}
+[data-creature="bloomkin"] [data-fx="bloom"] {
+  animation: idle-bloomkin-bloom 7.2s step-end infinite;
+}
+[data-creature="bloomkin"] [data-px="c"] {
+  animation: idle-bloomkin-blush 7.2s step-end infinite;
+}
+@keyframes idle-bloomkin-leaves {
+  28% {
+    transform: translateY(-1px);
+  }
+  44% {
+    transform: none;
+  }
+}
+@keyframes idle-bloomkin-drop {
+  32% {
+    opacity: 1;
+  }
+  37% {
+    transform: translateY(1px);
+  }
+  42% {
+    opacity: 0;
+  }
+}
+@keyframes idle-bloomkin-bloom {
+  42% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 0;
+  }
+}
+@keyframes idle-bloomkin-blush {
+  46% {
+    fill: var(--p);
+  }
+  82% {
+    fill: var(--c);
+  }
+}
+
+/* Bountree: its leaves rustle loose a ripe fruit, which rolls off to someone; a new one ripens. */
+[data-creature="bountree"] [data-px="g"] {
+  animation: idle-bountree-rustle 8s step-end infinite;
+}
+[data-creature="bountree"] [data-px="a"] {
+  animation: idle-bountree-ripen 8s step-end infinite;
+}
+[data-creature="bountree"] [data-fx="fruit"] {
+  animation: idle-bountree-fruit 8s step-end infinite;
+}
+@keyframes idle-bountree-rustle {
+  12%,
+  20% {
+    fill: var(--l);
+  }
+  16%,
+  24% {
+    fill: var(--g);
+  }
+}
+@keyframes idle-bountree-ripen {
+  28% {
+    fill: var(--l);
+  }
+  68% {
+    fill: var(--g);
+  }
+  88% {
+    fill: var(--a);
+  }
+}
+@keyframes idle-bountree-fruit {
+  28% {
+    opacity: 1;
+  }
+  31% {
+    transform: translateY(1px);
+  }
+  33% {
+    transform: translateY(3px);
+  }
+  35% {
+    transform: translateY(6px);
+  }
+  37% {
+    transform: translateY(10px);
+  }
+  39%,
+  43% {
+    transform: translateY(13px);
+  }
+  41% {
+    transform: translateY(11px);
+  }
+  47% {
+    transform: translate(1px, 13px);
+  }
+  51% {
+    opacity: 0.5;
+    transform: translate(2px, 13px);
+  }
+  55% {
+    opacity: 0;
+  }
+}

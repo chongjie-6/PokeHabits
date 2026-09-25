@@ -1,0 +1,189 @@
+/* Emberpup: the ember in its chest flickers; its ears flick, a spark rises. */
+[data-creature="emberpup"] [data-px="l"] {
+  animation: idle-emberpup-ember 1.3s step-end infinite;
+}
+[data-creature="emberpup"] [data-part="earL"] {
+  animation: idle-emberpup-ear-l 5.2s step-end infinite;
+}
+[data-creature="emberpup"] [data-part="earR"] {
+  animation: idle-emberpup-ear-r 5.2s step-end infinite;
+}
+[data-creature="emberpup"] [data-fx="spark"] {
+  animation: idle-emberpup-spark 5.2s step-end infinite;
+}
+@keyframes idle-emberpup-ember {
+  20% {
+    fill: #fff0cc;
+  }
+  35%,
+  80% {
+    fill: var(--l);
+  }
+  55% {
+    fill: #ffb877;
+  }
+  70% {
+    fill: #fff6e0;
+  }
+}
+@keyframes idle-emberpup-ear-l {
+  30% {
+    transform: translateX(1px);
+  }
+  34% {
+    transform: none;
+  }
+}
+@keyframes idle-emberpup-ear-r {
+  38% {
+    transform: translateX(-1px);
+  }
+  42% {
+    transform: none;
+  }
+}
+@keyframes idle-emberpup-spark {
+  60% {
+    opacity: 1;
+  }
+  65% {
+    transform: translateY(-1px);
+  }
+  70% {
+    transform: translate(1px, -2px);
+  }
+  75% {
+    opacity: 0.5;
+    transform: translate(1px, -3px);
+  }
+  80% {
+    opacity: 0;
+  }
+}
+
+/* Hearthound: its flame gutters to an ember; it braces, huffs, and the flame comes back taller. */
+[data-creature="hearthound"] > g {
+  animation: idle-hearthound-huff 6.4s step-end infinite;
+}
+[data-creature="hearthound"] [data-part="flame"] {
+  animation: idle-hearthound-flame 6.4s step-end infinite;
+}
+[data-creature="hearthound"] [data-px="y"] {
+  animation: idle-hearthound-ember 6.4s step-end infinite;
+}
+[data-creature="hearthound"] [data-fx="flare"] {
+  animation: idle-hearthound-flare 6.4s step-end infinite;
+}
+@keyframes idle-hearthound-huff {
+  46% {
+    transform: translateY(1px);
+  }
+  58% {
+    transform: translateY(-1px);
+  }
+  64% {
+    transform: none;
+  }
+}
+@keyframes idle-hearthound-flame {
+  38% {
+    opacity: 0;
+  }
+  58% {
+    opacity: 1;
+  }
+}
+@keyframes idle-hearthound-ember {
+  12% {
+    fill: var(--f);
+  }
+  18% {
+    fill: var(--y);
+  }
+  38% {
+    fill: var(--r);
+  }
+  58% {
+    fill: var(--y);
+  }
+}
+@keyframes idle-hearthound-flare {
+  58% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 0;
+  }
+}
+
+/* Blazemane: its mane shimmers; then it lifts its head and roars, eyes shut, and the fire roars with it. */
+[data-creature="blazemane"] [data-fx="maw"] {
+  opacity: 1;
+}
+[data-creature="blazemane"] [data-part="head"] {
+  animation: idle-blazemane-roar 7.2s step-end infinite;
+}
+[data-creature="blazemane"] [data-px="w"] {
+  animation: idle-blazemane-eyes 7.2s step-end infinite;
+}
+[data-creature="blazemane"] [data-px="y"] {
+  animation: idle-blazemane-shimmer 7.2s step-end infinite;
+}
+[data-creature="blazemane"] [data-fx="flare"] {
+  animation: idle-blazemane-flare 7.2s step-end infinite;
+}
+[data-creature="blazemane"] [data-fx="sparks"] {
+  animation: idle-blazemane-sparks 7.2s step-end infinite;
+}
+@keyframes idle-blazemane-roar {
+  44% {
+    transform: translateY(-1px);
+  }
+  68% {
+    transform: none;
+  }
+}
+@keyframes idle-blazemane-eyes {
+  44% {
+    fill: var(--o);
+  }
+  68% {
+    fill: var(--w);
+  }
+}
+@keyframes idle-blazemane-shimmer {
+  10%,
+  24% {
+    fill: var(--f);
+  }
+  14%,
+  28% {
+    fill: var(--y);
+  }
+}
+@keyframes idle-blazemane-flare {
+  44% {
+    opacity: 1;
+  }
+  68% {
+    opacity: 0;
+  }
+}
+@keyframes idle-blazemane-sparks {
+  48% {
+    opacity: 1;
+  }
+  52% {
+    transform: translateY(-1px);
+  }
+  56% {
+    transform: translateY(-2px);
+  }
+  60% {
+    opacity: 0.5;
+    transform: translateY(-3px);
+  }
+  64% {
+    opacity: 0;
+  }
+}

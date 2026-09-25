@@ -1,0 +1,127 @@
+/* Pebblit: does everything twice — two hops, two puffs of dust, two blinks. */
+[data-creature="pebblit"] > g {
+  animation: idle-pebblit-hop 5.6s step-end infinite;
+}
+[data-creature="pebblit"] [data-part^="arm"] {
+  animation: idle-pebblit-arms 5.6s step-end infinite;
+}
+[data-creature="pebblit"] [data-fx="dust"] {
+  animation: idle-pebblit-dust 5.6s step-end infinite;
+}
+[data-creature="pebblit"] [data-px="w"] {
+  animation: idle-pebblit-blink 5.6s step-end infinite;
+}
+@keyframes idle-pebblit-hop {
+  10%,
+  14%,
+  22%,
+  26% {
+    transform: translateY(-1px);
+  }
+  12%,
+  24% {
+    transform: translateY(-2px);
+  }
+  16%,
+  28% {
+    transform: none;
+  }
+}
+@keyframes idle-pebblit-arms {
+  10%,
+  22% {
+    transform: translateY(-1px);
+  }
+  16%,
+  28% {
+    transform: none;
+  }
+}
+@keyframes idle-pebblit-dust {
+  16%,
+  28% {
+    opacity: 1;
+  }
+  19%,
+  31% {
+    opacity: 0;
+  }
+}
+@keyframes idle-pebblit-blink {
+  50%,
+  56% {
+    fill: var(--o);
+  }
+  53%,
+  59% {
+    fill: var(--w);
+  }
+}
+
+/* Cobblet: tosses its pebble and catches it — twice, being Pebblit's. */
+[data-creature="cobblet"] [data-part="stone"] {
+  animation: idle-cobblet-toss 6s step-end infinite;
+}
+[data-creature="cobblet"] [data-part^="arm"] {
+  animation: idle-cobblet-arms 6s step-end infinite;
+}
+@keyframes idle-cobblet-toss {
+  20%,
+  24%,
+  32%,
+  36% {
+    transform: translateY(-2px);
+  }
+  22%,
+  34% {
+    transform: translateY(-4px);
+  }
+  26%,
+  38% {
+    transform: none;
+  }
+}
+@keyframes idle-cobblet-arms {
+  18%,
+  30% {
+    transform: translateY(-1px);
+  }
+  22%,
+  34% {
+    transform: none;
+  }
+}
+
+/* Cairnhold: a traveller's stone drops onto its head; the head gives once, and holds. */
+[data-creature="cairnhold"] [data-fx="stone"] {
+  animation: idle-cairnhold-stone 9s step-end infinite;
+}
+[data-creature="cairnhold"] [data-part="head"] {
+  animation: idle-cairnhold-head 9s step-end infinite;
+}
+@keyframes idle-cairnhold-stone {
+  40% {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+  42% {
+    transform: translateY(-2px);
+  }
+  44% {
+    transform: translateY(1px);
+  }
+  46% {
+    transform: none;
+  }
+  74% {
+    opacity: 0;
+  }
+}
+@keyframes idle-cairnhold-head {
+  44% {
+    transform: translateY(1px);
+  }
+  46% {
+    transform: none;
+  }
+}

@@ -1,0 +1,93 @@
+/* Mossback: holds so still that moss sprouts; moving its head shakes it off. */
+[data-creature="mossback"] [data-fx="neck"] {
+  opacity: 1;
+}
+[data-creature="mossback"] [data-part="head"] {
+  animation: idle-mossback-head 14s step-end infinite;
+}
+[data-creature="mossback"] [data-fx="moss1"] {
+  animation: idle-mossback-moss1 14s step-end infinite;
+}
+[data-creature="mossback"] [data-fx="moss2"] {
+  animation: idle-mossback-moss2 14s step-end infinite;
+}
+[data-creature="mossback"] [data-px="w"] {
+  animation: idle-mossback-blink 14s step-end infinite;
+}
+@keyframes idle-mossback-head {
+  60% {
+    transform: translateX(1px);
+  }
+  82% {
+    transform: none;
+  }
+}
+@keyframes idle-mossback-moss1 {
+  25% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 0;
+  }
+}
+@keyframes idle-mossback-moss2 {
+  42% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 0;
+  }
+}
+@keyframes idle-mossback-blink {
+  70% {
+    fill: var(--o);
+  }
+  76% {
+    fill: var(--w);
+  }
+}
+
+/* Elderback: keeps so still that the bud on its shell blooms and sheds a petal. */
+[data-creature="elderback"] [data-fx="bloom"] {
+  animation: idle-elderback-bloom 12s step-end infinite;
+}
+[data-creature="elderback"] [data-fx="petal"] {
+  animation: idle-elderback-petal 12s step-end infinite;
+}
+[data-creature="elderback"] [data-px="w"] {
+  animation: idle-elderback-blink 12s step-end infinite;
+}
+@keyframes idle-elderback-bloom {
+  30% {
+    opacity: 1;
+  }
+  76% {
+    opacity: 0;
+  }
+}
+@keyframes idle-elderback-petal {
+  58% {
+    opacity: 1;
+  }
+  62% {
+    transform: translate(1px, 1px);
+  }
+  66% {
+    transform: translate(1px, 2px);
+  }
+  70% {
+    opacity: 0.5;
+    transform: translate(2px, 3px);
+  }
+  74% {
+    opacity: 0;
+  }
+}
+@keyframes idle-elderback-blink {
+  84% {
+    fill: var(--o);
+  }
+  88% {
+    fill: var(--w);
+  }
+}
