@@ -164,6 +164,8 @@ const line: Creature[] = [
           [18, 4, "u"],
         ],
         burst: pixelsAt(17, 7, ["u.u", "...", "...", "u.u"]),
+        jabA: pixelsAt(15, 10, [".ooo.", "olllo", ".ooo."]),
+        jabB: pixelsAt(15, 17, [".ooo.", "olllo", ".ooo."]),
       },
     },
   },
