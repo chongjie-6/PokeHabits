@@ -1,0 +1,113 @@
+/* Cogling: a notch one way, a notch the other, then a click once it's just so. */
+[data-creature="cogling"] [data-part="cog"] {
+  transform-origin: center;
+  animation: idle-cogling-turn 8s step-end infinite;
+}
+[data-creature="cogling"] [data-fx="click"] {
+  animation: idle-cogling-click 8s step-end infinite;
+}
+[data-creature="cogling"] [data-px="w"] {
+  animation: idle-cogling-blink 8s step-end infinite;
+}
+@keyframes idle-cogling-turn {
+  20% {
+    transform: rotate(90deg);
+  }
+  28%,
+  44% {
+    transform: none;
+  }
+  36% {
+    transform: rotate(-90deg);
+  }
+}
+@keyframes idle-cogling-click {
+  46% {
+    opacity: 1;
+  }
+  52% {
+    opacity: 0;
+  }
+}
+@keyframes idle-cogling-blink {
+  46%,
+  74% {
+    fill: var(--o);
+  }
+  52%,
+  77% {
+    fill: var(--w);
+  }
+}
+
+/* Blockog: its four tiles part at the seams, hold, and clunk back hard enough to blink. */
+[data-creature="blockog"] [data-part] {
+  animation: idle-blockog-apart 7s step-end infinite;
+}
+[data-creature="blockog"] [data-part="tl"] {
+  --apart: translate(-1px, -1px);
+}
+[data-creature="blockog"] [data-part="tr"] {
+  --apart: translate(1px, -1px);
+}
+[data-creature="blockog"] [data-part="bl"] {
+  --apart: translate(-1px, 1px);
+}
+[data-creature="blockog"] [data-part="br"] {
+  --apart: translate(1px, 1px);
+}
+[data-creature="blockog"] [data-px="w"] {
+  animation: idle-blockog-blink 7s step-end infinite;
+}
+@keyframes idle-blockog-apart {
+  30% {
+    transform: var(--apart);
+  }
+  46% {
+    transform: none;
+  }
+}
+@keyframes idle-blockog-blink {
+  46% {
+    fill: var(--o);
+  }
+  50% {
+    fill: var(--w);
+  }
+}
+
+/* Latticog: fills its cells a day at a time, column by column, then starts a new year. */
+[data-creature="latticog"] [data-px="p"],
+[data-creature="latticog"] [data-px="q"],
+[data-creature="latticog"] [data-px="r"],
+[data-creature="latticog"] [data-px="s"],
+[data-creature="latticog"] [data-px="t"],
+[data-creature="latticog"] [data-px="u"] {
+  animation: idle-latticog-fill 8s step-end infinite;
+}
+[data-creature="latticog"] [data-px="q"] {
+  animation-delay: 0.5s;
+}
+[data-creature="latticog"] [data-px="r"] {
+  animation-delay: 1s;
+}
+[data-creature="latticog"] [data-px="s"] {
+  animation-delay: 1.5s;
+}
+[data-creature="latticog"] [data-px="t"] {
+  animation-delay: 2s;
+}
+[data-creature="latticog"] [data-px="u"] {
+  animation-delay: 2.5s;
+}
+@keyframes idle-latticog-fill {
+  10% {
+    fill: var(--h);
+  }
+  13% {
+    fill: var(--g);
+  }
+  75% {
+    fill: var(--e);
+  }
+}

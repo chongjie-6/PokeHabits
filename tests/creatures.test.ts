@@ -1,12 +1,18 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { addDays } from "@/lib/dates";
-import { CREATURES, discoveries } from "@/lib/creatures";
+import {
+  COGLINGS,
+  CREATURES,
+  discoveries,
+  findCogling,
+  isFound,
+} from "@/lib/creatures";
 import type { DayStat } from "@/lib/history";
 
-const DEX = CREATURES;
+const DEX = [...COGLINGS, ...CREATURES];
 
 /** Monday 2026-08-03 onward; each entry is one day's `[completed, scheduled]`. */
 function stats(days: [number, number][], preStart = false): DayStat[] {
@@ -60,6 +66,25 @@ describe("discoveries", () => {
     expect(
       discoveries(stats(good), addDays("2026-08-03", good.length), 1).found,
     ).toBe(CREATURES.length);
+  });
+});
+
+describe("findCogling", () => {
+  it("finds Cogling in any skin, and each form only in its own", () => {
+    const stored = new Map<string, string>();
+    vi.stubGlobal("localStorage", {
+      getItem: (key: string) => stored.get(key) ?? null,
+      setItem: (key: string, value: string) => stored.set(key, value),
+    });
+    const found = () => COGLINGS.filter((c) => isFound(c.id)).map((c) => c.id);
+
+    findCogling("classic");
+    expect(found()).toEqual(["cogling"]);
+    findCogling("grid");
+    expect(found()).toEqual(["cogling", "latticog"]);
+    findCogling("blocks");
+    expect(found()).toEqual(["cogling", "blockog", "latticog"]);
+    vi.unstubAllGlobals();
   });
 });
 

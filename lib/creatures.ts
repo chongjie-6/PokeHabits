@@ -3,9 +3,10 @@
  * like streaks: the Nth finished week at `QUALIFYING_RATE` finds the Nth one.
  */
 
-import { CREATURES } from "@/data/creatures";
+import { COGLINGS, CREATURES } from "@/data/creatures";
 import { startOfWeek } from "./dates";
 import type { DayStat } from "./history";
+import type { Skin } from "./skin";
 import type { DayKey } from "./types";
 
 export const QUALIFYING_RATE = 0.8;
@@ -52,4 +53,33 @@ export function discoveries(
   };
 }
 
-export { CREATURES };
+export { CREATURES, COGLINGS };
+
+const FORM_FOR_SKIN: Partial<Record<Skin, string>> = {
+  blocks: "blockog",
+  grid: "latticog",
+};
+
+const foundKey = (id: string) => `openhabits:found:${id}`;
+
+/**
+ * Cogling's line is found by acts, not a history, so it is stored, on this device
+ * only: settings open at all finds Cogling, and open in a skin finds that form.
+ */
+export function findCogling(skin: Skin): void {
+  for (const id of ["cogling", FORM_FOR_SKIN[skin]]) {
+    try {
+      if (id) localStorage.setItem(foundKey(id), "1");
+    } catch {
+      // Storage disabled: found again on the next visit.
+    }
+  }
+}
+
+export function isFound(id: string): boolean {
+  try {
+    return localStorage.getItem(foundKey(id)) === "1";
+  } catch {
+    return false;
+  }
+}

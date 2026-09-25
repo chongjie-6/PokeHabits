@@ -1,7 +1,13 @@
 "use client";
 
 import { useMemo, useState, type CSSProperties } from "react";
-import { CREATURES, discoveries, QUALIFYING_RATE } from "@/lib/creatures";
+import {
+  COGLINGS,
+  CREATURES,
+  discoveries,
+  isFound,
+  QUALIFYING_RATE,
+} from "@/lib/creatures";
 import { buildHistory, firstDayOf } from "@/lib/history";
 import { useOpenHabits } from "@/lib/store";
 import { useToday } from "@/lib/use-today";
@@ -9,7 +15,8 @@ import type { Creature, Pixel, PixelBox } from "@/lib/types";
 import "./idle.css";
 
 const SCALE = 6;
-const STAGE = Math.max(...CREATURES.map((c) => c.sprite.length)) * SCALE;
+const STAGE =
+  Math.max(...[...COGLINGS, ...CREATURES].map((c) => c.sprite.length)) * SCALE;
 
 export default function DexPage() {
   const { hydrated, habits, entries, settings } = useOpenHabits();
@@ -35,13 +42,30 @@ export default function DexPage() {
   const rate =
     thisWeek.scheduled === 0 ? null : thisWeek.completed / thisWeek.scheduled;
   const target = Math.round(QUALIFYING_RATE * 100);
+  // `view` is only set after hydration, so `window` exists here; the build drops this.
+  const revealAll =
+    process.env.NODE_ENV === "development" &&
+    new URLSearchParams(window.location.search).has("all");
+  // Cogling's line sits outside the weekly order, all at #000.
+  const dex = [
+    ...COGLINGS.map((creature) => ({
+      creature,
+      number: 0,
+      known: revealAll || isFound(creature.id),
+    })),
+    ...CREATURES.map((creature, index) => ({
+      creature,
+      number: index + 1,
+      known: revealAll || index < found,
+    })),
+  ];
 
   return (
     <section className="space-y-6">
       <div className="flex items-baseline justify-between gap-3">
         <h1 className="display-type text-[15px]">Creatures</h1>
         <p className="font-mono text-[12px] tabular-nums text-muted">
-          {found}/{CREATURES.length} found
+          {dex.filter((entry) => entry.known).length}/{dex.length} found
         </p>
       </div>
 
@@ -65,15 +89,14 @@ export default function DexPage() {
       </p>
 
       <ul className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-        {CREATURES.map((creature, index) => {
-          const known = index < found;
+        {dex.map(({ creature, number, known }) => {
           return (
             <li
               key={creature.id}
               className="surface-card flex flex-col items-center bg-surface px-3 py-4 text-center"
             >
               <p className="self-start font-mono text-[11px] tabular-nums text-muted">
-                #{String(index + 1).padStart(3, "0")}
+                #{String(number).padStart(3, "0")}
               </p>
               <div className="flex items-end" style={{ height: STAGE }}>
                 <Sprite creature={creature} silhouette={!known} />

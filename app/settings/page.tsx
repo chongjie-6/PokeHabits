@@ -1,11 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { AccountCard } from "@/components/AccountCard";
 import { InstallCard } from "@/components/DownloadAppButton";
 import { ReminderCard } from "@/components/ReminderCard";
 import { habitColor } from "@/lib/colors";
+import { findCogling } from "@/lib/creatures";
 import { HAPTIC_DONE, vibrate } from "@/lib/haptics";
 import { activeTagsFor, deckCountFor, MODE_COPY, tagsFor } from "@/lib/daily";
 import { applySkin, SKINS, useSkin, type Skin } from "@/lib/skin";
@@ -37,6 +38,8 @@ export default function SettingsPage() {
   const [confirmReset, setConfirmReset] = useState(false);
   const [pending, setPending] = useState<AnyExportBundle | null>(null);
   const [confirmReplace, setConfirmReplace] = useState(false);
+
+  useEffect(() => findCogling(skin), [skin]);
 
   function download() {
     const bundle = exportBundle();

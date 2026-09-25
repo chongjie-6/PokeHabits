@@ -23,6 +23,8 @@ import spurling from "./spurling";
 import gainlet from "./gainlet";
 import tangling from "./tangling";
 
+export { default as COGLINGS } from "./cogling";
+
 export const CREATURES: Creature[] = [
   ...sproutle,
   ...emberpup,
