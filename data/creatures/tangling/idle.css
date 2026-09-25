@@ -462,7 +462,7 @@
   }
 }
 
-/* Tanglare: throws both vines wide, runs sunlight down one and then the other, and lights up what they caught. */
+/* Tanglare: throws both vines wide, runs sunlight down one and then the other, and its halo flares. */
 [data-creature="tanglare"] [data-part="vineL"] {
   animation: idle-tanglare-vine-l 7s step-end infinite;
 }
@@ -686,12 +686,15 @@
   }
 }
 
-/* Neverfox: an excuse creeps up on it twice and is sent back to zero both times; it never arrives. */
+/* Neverfox: an excuse creeps up on it twice and is sent back to zero both times, its ring of a tail flashing gold; it never arrives. */
 [data-creature="neverfox"] [data-fx="excuse"] {
   animation: idle-neverfox-excuse 7s step-end infinite;
 }
 [data-creature="neverfox"] [data-fx="zero"] {
   animation: idle-neverfox-zero 7s step-end infinite;
+}
+[data-creature="neverfox"] [data-part="tail"] [data-px="b"] {
+  animation: idle-neverfox-ring 7s step-end infinite;
 }
 [data-creature="neverfox"] [data-part="earR"] {
   animation: idle-neverfox-ear 7s step-end infinite;
@@ -729,6 +732,16 @@
     opacity: 0;
   }
 }
+@keyframes idle-neverfox-ring {
+  22%,
+  38% {
+    fill: var(--g);
+  }
+  26%,
+  42% {
+    fill: var(--b);
+  }
+}
 @keyframes idle-neverfox-ear {
   18%,
   34% {
@@ -748,7 +761,7 @@
   }
 }
 
-/* Tapestrel: unwinds into a net, catches the sun as it falls, and squeezes its eyes shut winding the day back in. */
+/* Tapestrel: strings a net between its wings, catches the sun as it falls, and squeezes its eyes shut winding the day back in. */
 [data-creature="tapestrel"] [data-fx="net"] {
   animation: idle-tapestrel-net 7s step-end infinite;
 }
@@ -807,7 +820,7 @@
   }
 }
 
-/* Whorlinity: its shell turns a quarter every half-second, forever; once a loop it bows its stalks in thanks. */
+/* Whorlinity: rides its shell like a wheel, a quarter-turn every half-second, forever; once a loop it bows its stalks in thanks. */
 [data-creature="whorlinity"] [data-part="shell"] {
   transform-origin: center;
   animation: idle-whorlinity-turn 2s step-end infinite;
@@ -835,7 +848,7 @@
   }
 }
 
-/* Burblivion: fans its gills, blows a bubble that flickers in and out of being as it drifts off, and wonders who it is. */
+/* Burblivion: fans its gills, its bubble flickers in and out of being around it, and it wonders who it is. */
 [data-creature="burblivion"] [data-part="gillL"] {
   animation: idle-burblivion-gills 8s step-end infinite;
 }
@@ -843,7 +856,7 @@
   animation: idle-burblivion-gills 8s step-end infinite;
   animation-delay: 0.14s;
 }
-[data-creature="burblivion"] [data-fx="bubble"] {
+[data-creature="burblivion"] [data-px="u"] {
   animation: idle-burblivion-bubble 8s step-end infinite;
 }
 [data-creature="burblivion"] [data-fx="who"] {
@@ -860,28 +873,20 @@
   }
 }
 @keyframes idle-burblivion-bubble {
-  28% {
-    opacity: 1;
-  }
-  32% {
-    opacity: 0.3;
-    transform: translate(1px, -1px);
-  }
-  36% {
-    opacity: 1;
-    transform: translate(2px, -2px);
-  }
-  40% {
-    opacity: 0.3;
-    transform: translate(3px, -2px);
-  }
+  28%,
+  36%,
   44% {
+    opacity: 0.3;
+  }
+  32%,
+  40% {
     opacity: 1;
-    transform: translate(4px, -3px);
   }
   48% {
     opacity: 0;
-    transform: none;
+  }
+  56% {
+    opacity: 1;
   }
 }
 @keyframes idle-burblivion-who {
