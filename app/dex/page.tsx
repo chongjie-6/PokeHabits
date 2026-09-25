@@ -69,6 +69,9 @@ export default function DexPage() {
               key={creature.id}
               className="surface-card flex flex-col items-center bg-surface px-3 py-4 text-center"
             >
+              <p className="self-start font-mono text-[11px] tabular-nums text-muted">
+                #{String(index + 1).padStart(3, "0")}
+              </p>
               <Sprite creature={creature} silhouette={!known} />
               <p className="mt-2 text-[13px] font-medium">
                 {known ? creature.name : "???"}

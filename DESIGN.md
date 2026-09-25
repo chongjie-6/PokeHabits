@@ -369,7 +369,7 @@ Two tests guard the corpus: ids are unique, and no two entries share the same op
 
 ### 5.5 Creatures — `lib/creatures.ts`
 
-Every finished week in which at least `QUALIFYING_RATE` (80%) of scheduled habit-days were done discovers the next creature in `data/creatures.ts`, in the corpus's order. The week in progress never counts, since it isn't over yet, and a week with nothing scheduled neither counts nor breaks anything.
+Every finished week in which at least `QUALIFYING_RATE` (80%) of scheduled habit-days were done discovers the next creature in `data/creatures.ts`, in the corpus's order. That order keeps each evolution line together, base form first, and a creature's position is its dex number, shown on its card whether or not it has been found. The week in progress never counts, since it isn't over yet, and a week with nothing scheduled neither counts nor breaks anything.
 
 **Derived, never persisted**, like streaks: `/dex` rebuilds the history from the first habit and counts. So nothing syncs and every device agrees. The cost is that deleting a habit deletes its entries, which can un-qualify a week and take a creature back. Archiving doesn't do this. If that ever matters, persist a discovery map in `Settings`.
 
