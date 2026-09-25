@@ -170,12 +170,10 @@ describe("idle loops", () => {
   });
 
   it("are all imported by the dex", () => {
-    const entry = readFileSync(join(root, "app/dex/idle.css"), "utf8");
+    const entry = readFileSync(join(root, "app/dex/idle.ts"), "utf8");
     for (const { name, styled } of lines) {
       if (!styled) continue;
-      expect(entry).toContain(
-        `@import "../../data/creatures/${name}/idle.css";`,
-      );
+      expect(entry).toContain(`import "@/data/creatures/${name}/idle.css";`);
     }
   });
 

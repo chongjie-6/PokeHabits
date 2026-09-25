@@ -12,7 +12,7 @@ import { buildHistory, firstDayOf } from "@/lib/history";
 import { useOpenHabits } from "@/lib/store";
 import { useToday } from "@/lib/use-today";
 import type { Creature, Pixel, PixelBox } from "@/lib/types";
-import "./idle.css";
+import "./idle";
 
 const SCALE = 6;
 const STAGE =

@@ -1,0 +1,18 @@
+// Imported from TS, not chained with CSS @import: Turbopack's dev server never
+// rebuilds a stylesheet reached only through @import, so edits there never showed.
+// rig.css first: its rules tie on specificity with the lines' and must lose to them.
+import "./rig.css";
+import "@/data/creatures/sproutle/idle.css";
+import "@/data/creatures/emberpup/idle.css";
+import "@/data/creatures/drizzlet/idle.css";
+import "@/data/creatures/mossback/idle.css";
+import "@/data/creatures/gustling/idle.css";
+import "@/data/creatures/pebblit/idle.css";
+import "@/data/creatures/glimmoth/idle.css";
+import "@/data/creatures/frostnib/idle.css";
+import "@/data/creatures/duskmolt/idle.css";
+import "@/data/creatures/stonkey/idle.css";
+import "@/data/creatures/spurling/idle.css";
+import "@/data/creatures/cogling/idle.css";
+import "@/data/creatures/gainlet/idle.css";
+import "@/data/creatures/tangling/idle.css";
